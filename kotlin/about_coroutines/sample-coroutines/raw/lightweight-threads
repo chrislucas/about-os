@@ -1,0 +1,150 @@
+https://en.wikipedia.org/wiki/Light-weight_process
+https://en.wikipedia.org/wiki/User_space
+https://en.wikipedia.org/wiki/Virtual_memory
+https://en.wikipedia.org/wiki/Memory_management_unit
+https://en.wikipedia.org/wiki/Paging
+https://en.wikipedia.org/wiki/Bank_switching
+https://en.wikipedia.org/wiki/Memory-mapped_file
+https://en.wikipedia.org/wiki/Virtual_address_space
+
+
+Light weight process
+
+
+User space - virtual memory
+
+Sistemas operacionais modernos segregam a memoria virtual em 2 areas denominadas "kernel space" e "user space"
+Essa separacao serve para prover protecao a memoria contra comportamentos maliciosos de programas
+
+"Kernel space" eh uma area restrita reservada para executar programas do sistemas operacional (kernel), kernel extensions
+e drivers de dispositivos. "User space" eh uma area onde aplicacoes e alguns drivers podem ser executadas
+
+User space  ou userland referece ao codigo que eh executado fora do kernel do sistema operacional, cada processo armazenado
+na user space normalmente eh executado em sua propria reserva de memoria virtual. Geralmente a userland refere-se a programas
+e bibliotecas que o S.O usa para interagir com o Kernel, Softwares que realizam IO, manipulam filesystems entre outras coisas.
+
+Cada processo na userspace tem seu proprio espaco de memoria virtual e se nao for configurado de forma explicita, nao consegue
+acessar a memoria de outro processo. Essa eh a base de protecao de memoria na maioria dos S.Os.
+
+================================================================================================
+
+Virtual memoory
+
+Virtual memory ou virtual storage e uma tecnica de gerenciamento de memoria que prove uma abstracao de armazenamento
+de recurso disponivel numa determinada maquina dandp ao usuario uma ilusao de possuir mais recurso de memoria do que
+possui fisicamente
+
+================================================================================================
+
+MMU - Memory management Unit ou PMMU (Paged memory management unit)
+
+Hardware que Possui todas as referencias  de endereco de memoria que passam por ela e eh
+responsavel por converter endereco de memoria virtual em físico.
+
+Ela gerencia a memoria virtual, protecao de memoria, controle de cache, arbitracao de BUS e em arquiteturas
+de computadores mais simples (sistemas de 8bits) cuida de bbank switching. Automaticamente converte endereco
+de memoria virtual em fisico. Softwares do S.O podem extender essas capacidades e prover um espaco de endereco virtual
+que excede a capacidade da memoria real e assim referenciar mais memoria do que fisicamente existe.
+
+O primeiro beneficio da memoria virtual eh livrar os programas de terem que gerenciar um espaco de memoria compartilhado,
+aumenta seguranca de execucao de programas devido o isolamento deles em seu proprio espaco de memoria e atraves
+da tecnica denominada Paging, simular o uso de mais recurso de memoria do que fisicamente existe disponivel.
+
+================================================================================================
+
+Paging
+
+Em sistemas operacionais, paging eh um esquema de gerenciamento de memoria onde o computador armazena e recupera
+dados a partir de uma unidade secundaria de armazenamento para o uso e alocacao na memoria principal (Uso da memoria
+ROM para armazenar dados e assim ter mais recurso de memoria disponivel para execucao dos programas)
+
+Nesse esquema, o S.O recupera os dados de uma unidade de armazenamento secundario que gerencia blocos de memoria
+denominados "Paginas - pages". Paging eh uma importante parte da implementacao de memoria virtual para S.Os modernos,
+usando armazenamento secundario como fonte de recurso de memoria, assim aumentando a quantidade de memoria fisica disponivel
+para programas
+
+================================================================================================
+
+Bank switching
+
+Tecnica usada em computer design para aumentar a quantidade de memoria disponivel alem da quantidade diretamente
+enderecavel pelo processador.
+
+Usado para configurar um sistema de forma diferente em ocasioes diferentes, por exemplo o uso de uma ROM para iniciar
+um sistema a partir de um disquete pode ser descartada assim que nao for mais necessaria
+
+================================================================================================
+
+Virtual address space (VAS)
+
+Espaco de memoria virtual eh um conjunto de intervalos de memoria virtual que um S.O torna disponivel
+para um processo (0x00000000 a 0x00010000 para uma tarefa X qualquer). O intervalo de memoria
+geralmente inicia a partir de um endereco mais baixo e pode chegar ao maior valor de endereco disponivel
+pelo "conjunto de instrucoes da arquitetura" (https://en.wikipedia.org/wiki/Instruction_set_architecture)
+e o tamanho suportado pela implementacao do S.O, que pode ser de 4bytes para sistemas de 32bits ou 8bytes
+para um sistema de 64bits
+
+O espaco de endereco virtual (VAS - Virtual address space) fornece alguns beneficios, como segurancao atraves do isolamento de processos
+onde cada um possui seu proprio espaco de endereco (address space)
+
+Exemplo - Fonte wikipedia (https://en.wikipedia.org/wiki/Virtual_address_space)
+
+Este exemplo utiliza em particular a terminologia usada no Windows NT
+
+Quando uma aplicacao num S.O de 32 bits eh executada, o processo tem para si 4GiB no espaco de memoria virtual
+Representemos cada byte a partir do endereco 0 ate 2^32-1 com o '-'
+
+VAS -> 0 ------------------------------------------------------- 4GiB (0 a 2^32-1)
+
+Entao a aplicacao XPTO.exe eh mapeada para o VAS. O S.O eh responsavel por mapear os enderecos de memoria
+que estao reservados para alocar o programa que sera executado. O endereco do processo eh mapeado
+byte a byte num arquivo .exe
+
+
+Abaixo trocamos um intervalo que nao possuia reserva de memoria que era representado por '-' por
+'v'', indicando que o programa XPTO.exe foi alocado no espaco de memoria para ser executado
+
+VAS -> 0 ---vvvvv------------------------------------------------ 4GiB (0 a 2^32-1)
+
+Os 'v's sao valores em bytes armazenados no chamado mapped file (https://en.wikipedia.org/wiki/Memory-mapped_file)
+Memory mapped file eh um segmento da memoria virtual que atribui uma correlacao byte a byte com uma porcao
+de um arquivo ou um recurso similar a um arquivo. Esse recurso geralmente eh um arquivo que esta fisicamente
+presente em disco, mas pode ser um dispositivo, um objeto de memoria compartilhada ou um recurso que
+o S.O pode fazer referencia atraves de um File descriptor.
+
+Feito essa correlacao entre o arquivo e o espaco de memoria, isso permite que aplicacoes tratar a porcao
+de memoria mapeada como se fosse a memoria primaria do computador
+
+VAS -> 0 ---xxxxx--------kkkkk------------------------------------- 4GiB (0 a 2^32-1)
+x -> XPTO
+k -> kernel
+
+O processo inicia executando os bytes do arquivo .exe, a unica forma do processo usar o definir
+valores no VAS eh solicitando para o S.O mapear os enderecos de bytes para um arquivo. Uma forma
+comum adotada pelos S.O de usar o VAS eh mapear os enderecos num arquivo de paginacao (https://en.wikipedia.org/wiki/Paging)
+
+================================================================================================
+
+ISA - Instruction set arch
+
+
+================================================================================================
+
+LWP - Lightweight process
+
+No campo de sistemas operacionais Light weight process é um meio de alcancar processamento multitarefas.
+
+Usado em sistemas como Unix V e Solaris, a LWP é executada numa área denominada de "user space" (area onde programas que nao sao do
+S.O cada um uma area de memoria virtualizada para serem executados, sendo executados sobre uma unica Thread do kernel e compartilham
+)
+
+
+
+==============================================================================================
+
+
+
+
+================================================================================================
+
+LWP vs Threads

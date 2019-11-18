@@ -1,0 +1,124 @@
+Siglas:
+
+ODM (original design manufacturer)- "ODM como servico e definido como uma companhia que
+projeta e produz um produto que foi especificado por uma outra empresa, geralmente para ser vendido", ou seja ODM
+eh a empresa que produziu o produto original a partir de uma especificacao de uma ideia de produto.
+
+OEM (original equipment manufacturer) - "Produtores de componentes que sao comprados por outras empresas e revendidos
+por elas utilizando suas proprias marcas. OEM refere-se a empresas que originalmente produziram o produto
+e fizeram pesquisa de mercado, mas não tem ou não querem arcar com os custos de producao por quaisquer motivos, entao delegam a
+outra empresa a producao do produto"
+
+HAL - Hardware Abstraction Layer
+
+OTA - Over the air
+https://www.embarcados.com.br/atualizacao-ota-over-the-air-introducao/
+"A atualizacao over-the-air permite a realizar atualizacoes em softwares embarcados de forma remota. Existem
+varias solucoes implementadas para realizar esse tipo de atualizacaoÇ Open source e proprietaria"
+
+
+https://source.android.com/devices/tech/ota
+
+"atualizacoes OTA (over the air) sao projetadas para atualizar os sistemas subjacentes ao sistema operacionalÇ
+apps somente de leitura na particao do sistema e ou regras de time zone. Essas atualizacoes
+nao afeitam aplicacoes instalados por usuarios pela google play"
+
+
+Atualizacoes OTA
+
+A/B (Seamless) system update:
+
+"dispositivos modernos com S.O android possuem 2 copias de cada particao (A|B) e podem aplicar atualizacao
+em uma delas enquanto a outra esta em uso mas ociosa. Dispositivos com essa copia de particoes nao precisam
+de espaco para realizar o download da atualizacao pois conseguem aplica-la conforme
+recebem o conteudo da rede, isso eh conhecido como A/B streaming" Mais sobre atualizacao
+OTA em: (https://source.android.com/devices/tech/ota/ab/index.html)
+
+Non A/B System updates: "Dispositivos antigos possuem uma particao de recuperacao que possui o software necessario
+para realizar a extracao da atualizacao baixada e a aplicacao dela na particao do S.O". Link para mais informacoes
+sobre update nao A/B (https://source.android.com/devices/tech/ota/nonab/index.html)
+
+
+Fontes
+ODM/ OEM
+http://rockleighindustries.com/oem-odm-manufacturing.html
+https://www.quora.com/What-is-the-difference-between-ODM-and-OEM
+
+===========================================================================================================
+
+
+Livro Android System Programming
+
+Esse livro tem o foco de apresentar a camada arquitetural do S.O Android abaixo do framework de aplicacao
+(application framework, onde estao as aplicacoes escritas para os usuarios), o objetivo eh apresentar formas
+de personalizacao do sistema e a portabilidade do mesmo para plataformas de hardware
+
+Capitulo 1 - What is system programming?
+Definição de System programming (Programação de sistemas)
+"Programação de sistemas é uma atividade de programar software para sistemas.
+A característica primaria que distingue programação de sistemas de programação de
+aplicações é que a última de por objetivo produzir software para um usuário, ao passo que
+programação de sistema tem por objetivo produzir softwares e plataformas que irão servir a outros
+softwares (S.Os, softwares de aplicação científica, motores de jogos etc)"
+
+* Unix programming
+"Tradicionalmente toda a programacao do unix era a nivel de sistema. Programacao de Unix
+ou Linux eh construida em volta de 3 pilares: Chamada de sistema, biblioteca da linguagem C e o compilador de C.
+Isso eh verdadeiro para programacao de sistemas android"
+
+"No topo da arquitetura do sistema existem as chamadas ao sistema e a biblioteca C, Android possui uma camada de abstracao
+para o nivel de aplicacao. Esse eh o Android Framework e a JVM"
+
+"Overview da arquitetura do S.O Android"
+
+(https://source.android.com/devices/architecture)
+
+|-------------------------------------------|
+|           Application Framework           |
+|-------------------------------------------|
+|               Binder IPC                  |
+|-------------------------------------------|
+|           Android System Service          |
+|-------------------------------------------|
+|                   HAL                     |
+|-------------------------------------------|
+|                  Kernel                   |
+|-------------------------------------------|
+|                 Hardware                  |
+|-------------------------------------------|
+
+* Kernel
+
+Ate o presente momento da escrita desse resumo, O S.O android usa uma versão personalizada so kernel do S.O linux.
+abaixo temos uma lista das mudancas realizadas no kernel
+
+ -> ashmem (Android Shared Memory) : Sistema de compartilhamento de memoria para o usuario baseado em arquivo
+ -> Binder: Sistema de IPC (inter process communication) e RPC (Remote procedure call)
+ -> Logger: Mecanimos de alta performance de logging otimizado para escrita
+ -> Paranoid Networking? Mecanismo para restricao de I/O de rede para certos processos
+ -> pmem (Physical Memory): Um driver para mapeamento de grandes "pedacos|alocacoes" de memoria fisica para
+ o "user space" (memoria virtual ou espaco de memoria reservado para a execucao das aplicacoes do usuario)
+ -> viking killer (Out of memory killer): Uma implementacap de OOM para android que mata o processo mais novo
+ menos utilizado sobre a logica da condicao de pouca memoria disponivel
+ -> wakelocks: Solucao de gerenciamento de energia cujo padrao de estado do dispositivo eh ^dormindo^ e uma acao
+ explicita eh necessaria (via wakelock) para mudar esse estado
+
+ HAL (Hardware abstraction layer) - Camada de abstracao que define uma interface padrao para que fabricantes de hadware
+ implementar suas proprias solucoes de software. Isso torna o Android agnostico a implementacoes de driver em lower-level.
+ A HAL permite-nos implementar funcionalidades sem afetar ou modificar o sistema no nível mais alto (aplicacoes de usuario)
+ A implementacao da HAL esta armazenada em modulos e eh carregada pelo S.O
+
+
+OOM Killer (OOM = Out of memory)
+https://www.oracle.com/technetwork/pt/articles/systems/servers-storage-dev/configurar-linux-oom-2759809-ptb.html
+https://www.kernel.org/doc/gorman/html/understand/understand016.html
+https://unix.stackexchange.com/questions/153585/how-does-the-oom-killer-decide-which-process-to-kill-first
+
+Search
+Light-weight process implemented kotlin
+
+
+
+OEM/ODM companies
+http://rockleighindustries.com/oem-odm-manufacturing.html
+https://www.quora.com/What-is-the-difference-between-ODM-and-OEM
