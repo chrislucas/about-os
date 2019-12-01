@@ -7,6 +7,25 @@ https://en.wikipedia.org/wiki/Bank_switching
 https://en.wikipedia.org/wiki/Memory-mapped_file
 https://en.wikipedia.org/wiki/Virtual_address_space
 
+https://pt.wikipedia.org/wiki/Thread_(computa%C3%A7%C3%A3o)#Exemplos_de_Usos
+
+http://www.dsc.ufcg.edu.br/~jacques/cursos/map/html/threads/escalonamento.html
+
+
+Thread (Computação: https://en.wikipedia.org/wiki/Thread_(computing))
+Na computação, uma Thread e a menor sequencia de instrução que pode ser gerenciada independente por um escalonador
+(algoritmo responsável por dividir o tempo do processador e agendar um momento para cada processo utilizar-lo
+https://en.wikipedia.org/wiki/Scheduling_(computing))
+
+A implementacao de Threads e processos variam entre os S.Os mas em geral uma thread é um componente de um processo.
+Multithredas podem existir dentro de um processo, executando concorrentemente e compartilhando recursos (memória por exemplo)
+enquanto processos diferentes nao compartilham recursos.
+
+Em geral, threads de processo compartilham codigo executavel, valores de variaveis alocadas dinamicamente
+(veja: https://en.wikipedia.org/wiki/Memory_management#HEAP) e variaveis globais que não estejam em threads locais
+(Thread Local Storage - https://en.wikipedia.org/wiki/Memory_management#HEAP)
+
+
 
 Light weight process
 
@@ -132,11 +151,18 @@ ISA - Instruction set arch
 
 LWP - Lightweight process
 
-No campo de sistemas operacionais Light weight process é um meio de alcancar processamento multitarefas.
+No campo de sistemas operacionais Light weight process é um meio de alcancar processamento multitarefas
+(https://en.wikipedia.org/wiki/Light-weight_process).
 
-Usado em sistemas como Unix V e Solaris, a LWP é executada numa área denominada de "user space" (area onde programas que nao sao do
-S.O cada um uma area de memoria virtualizada para serem executados, sendo executados sobre uma unica Thread do kernel e compartilham
-)
+Usado em sistemas como Unix V e Solaris, a LWP é executada numa área denominada de "user space" (
+area reservada para programas que sao executados fora do kernel, https://en.wikipedia.org/wiki/User_space)
+sobre uma unica Thread do sistema (kernel), e compartilha a "address space" (bloco de de memória separado e gerenciado pelo S.O.
+A separação é feita por intervalos Exemplo um bloco de 16bytes no intervalo 0x00 a 0x0f
+, https://en.wikipedia.org/wiki/Virtual_address_space) e outros recursos do sistema com outras
+LWP dentro do mesmo processo.
+
+Por definição, na computação uma thread eh uma instruçcão que executada dentro de um processo e consegue compartilhar
+recursos de memoria com outras threads
 
 
 

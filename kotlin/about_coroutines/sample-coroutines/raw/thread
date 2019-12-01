@@ -1,0 +1,38 @@
+Thread
+https://pt.wikipedia.org/wiki/Thread_(computa%C3%A7%C3%A3o)
+https://edisciplinas.usp.br/pluginfile.php/2945126/mod_resource/content/1/22-threads-v8.pdf
+https://www.devmedia.com.br/threads-paralelizando-tarefas-com-os-diferentes-recursos-do-java/34309
+https://pt.wikipedia.org/wiki/Contexto_(computa%C3%A7%C3%A3o)
+
+Pesquisar por "Hardware context"
+https://en.wikipedia.org/wiki/Context_switch
+
+Escalonamento de Threads
+http://www.dsc.ufcg.edu.br/~jacques/cursos/map/html/threads/escalonamento.html
+
+
+Pontos interessantes sobre Thread
+
+Resumo da sessão sobre "Particularidades" (https://pt.wikipedia.org/wiki/Thread_(computa%C3%A7%C3%A3o))
+
+Threads compartilham contexto (conjunto de dados utilizados pela thread) e espaço de memõria (endereço de memoria
+reservado para execução do programa, assim compartllhando as variáveis alocadas dinamicamente e variaveis globais)
+
+Fonte:
+*(https://pt.wikipedia.org/wiki/Thread_(computa%C3%A7%C3%A3o))
+https://en.wikipedia.org/wiki/Thread_(computing)#Processes,_kernel_threads,_user_threads,_and_fibers
+
+Contexto de hardware (https://pt.wikipedia.org/wiki/Contexto_(computa%C3%A7%C3%A3o))
+
+No âmbito da computação, um contexto de tarefa é um conjunto de dados relacionados a threads e processos que deve
+ser salvo para permitir que uma tarefa seja interromptida em uma outra possa ser inicializada pelo processador.
+O processador é o encarregado de interromper uma tarefa, salvar o contexto dela e recupera-lo posteriormente para dar
+continuidade do ponto em que ela foi interrompida.
+
+Os dados do contextos estão em:
+ * Nos registradores do processador
+ * no espaço de memória reservado para a tarefa
+ * Alguns S.Os possuem registradorez de controle usados para gerenciar as tarefas
+
+ Compartilhando o contexto (dados) e memõria o overhead ao escalonar uma thread (interromper uma thread para iniciar outra)
+ eh muito menor do que um processo
