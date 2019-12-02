@@ -1,3 +1,27 @@
+Lambda expression Java 8
+https://stackoverflow.com/questions/17913409/what-is-a-sam-type-in-java
 https://stackoverflow.com/questions/17913409/what-is-a-sam-type-in-java
 
-Lambda expression Java 8
+Object Expressions and Declaration
+https://kotlinlang.org/docs/reference/object-declarations.html
+
+SAM
+https://medium.com/tompee/idiomatic-kotlin-lambdas-and-sam-constructors-fe2075965bfb
+
+Pesquisar por
+SAM Conversion
+lambda streams java 8
+functional interface kotlin
+kotlin functional interface lambda
+
+
+
+Single Abstract Method (SAM)
+https://kotlinlang.org/docs/reference/compiler-plugins.html#sam-with-receiver-compiler-plugin
+https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
+https://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-3.html
+http://www.lambdafaq.org/what-is-a-functional-interface/
+https://code.tutsplus.com/tutorials/quick-tip-write-cleaner-code-with-kotlin-sam-conversions--cms-29304
+https://readyset.build/kotlins-sam-problem-f315ffe6be3a
+https://dzone.com/articles/java-8-functional-interfaces-sam
+https://medium.com/@lupajz/its-not-the-runnable-you-re-looking-for-321da0fa8e97
