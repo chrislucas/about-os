@@ -9,8 +9,12 @@ https://antonioleiva.com/kotlin-coroutines/
 https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html
 https://www.youtube.com/watch?v=IQf-vtIC-Uc&t=0s
 
+GlobalScope
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/index.html
+
 
 Basic
 https://kotlinlang.org/docs/reference/coroutines/basics.html
 
 CoroutineContext
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html

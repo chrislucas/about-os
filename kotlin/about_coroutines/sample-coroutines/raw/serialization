@@ -1,4 +1,20 @@
 Kotlin serialization
 https://blog.jetbrains.com/kotlin/2020/10/kotlinx-serialization-1-0-released/
 
+Resumo
+ - kotlin.serialization eh escrito em kotlin
+    - disponivel para kotlin/native e kotlin/JS
+    - construido pensando no type-system do kotlin
+- Permite serializar/deserializar data class, um object e listas genericas List<T>
+
+
+Razoes para utilizar as classes de de(serializacao) do kotlin
+
+"kotlin through and through", significar poder implementar serializacao usando a linguagem kotlin de ponta a ponta
+com classes da propria linguagem que suportam todo o ecossistema kotlin como kotlin multiplataforma Kotlin/Native
+e Kotlin/JS. Como dito acima, conseguimos de(serializar) data class, List<T> e objects usando a idiomatica da linguagem
+
+
+
+
 O que é serializacao na computacao ?

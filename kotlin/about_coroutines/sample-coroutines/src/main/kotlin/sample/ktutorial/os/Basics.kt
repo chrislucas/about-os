@@ -1,4 +1,4 @@
-package sample.os
+package sample.ktutorial.os
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

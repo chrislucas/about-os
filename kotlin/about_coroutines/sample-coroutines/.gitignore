@@ -33,3 +33,8 @@ src/test/
 /build/classes/kotlin/
 /.gradle/
 /build/classes/
+/.gradle/
+/.idea/
+/build/
+/build/
+/.gradle/
