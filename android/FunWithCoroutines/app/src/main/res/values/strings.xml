@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">FunWithCoroutines</string>
+    <string name="tag_search_github_repositories_fragment">tag_search_github_repositories_fragment</string>
+</resources>

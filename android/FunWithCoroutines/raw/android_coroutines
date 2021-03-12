@@ -1,0 +1,26 @@
+https://developer.android.com/kotlin/coroutines
+
+https://developer.android.com/topic/libraries/architecture/coroutines?hl=pt-br
+
+coroutines + viewmodelscope
+https://developer.android.com/topic/libraries/architecture/coroutines?hl=pt-br
+https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471
+https://medium.com/@cesarmcferreira/how-to-use-the-new-android-viewmodelscope-in-clean-architecture-2a33aac959ee
+
+Kotlin Coroutines Doc
+https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency
+
+Topico interessante
+https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency
+
+Test coroutines
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-test/
+
+Codelabs
+https://github.com/googlecodelabs/kotlin-coroutines
+https://developer.android.com/codelabs/kotlin-coroutines#0
+https://developer.android.com/codelabs/advanced-kotlin-coroutines#0
+
+
+Flow
+https://developer.android.com/kotlin/flow?hl=pt-br
