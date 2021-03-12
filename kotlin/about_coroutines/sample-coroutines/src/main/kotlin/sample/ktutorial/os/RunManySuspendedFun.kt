@@ -1,4 +1,4 @@
-package sample.os
+package sample.ktutorial.os
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,13 +19,14 @@ fun stress() {
 
 
 fun startAMillionCoroutines() {
-    val c = AtomicLong()
+    val valueOfAtomicLong = AtomicLong()
     for (i in 1 .. 1_000_000L) {
        GlobalScope.launch {
-           c.addAndGet(i)
+           // adiciona o valor passado como argumento ao valor ja definido da variavel
+           valueOfAtomicLong.addAndGet(i)
        }
     }
-    println(c.get())
+    println(valueOfAtomicLong.get())
 }
 
 fun main() {
