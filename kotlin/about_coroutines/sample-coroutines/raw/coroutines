@@ -1,5 +1,6 @@
 Projeto no github sobre coroutines
 https://github.com/Kotlin/kotlinx.coroutines
+------------------------------------------------------------------------------------------------------------------
 
 Tutoriais
 https://movile.blog/programacao-assincrona-em-kotlin-dissecando-coroutines/
@@ -9,12 +10,77 @@ https://antonioleiva.com/kotlin-coroutines/
 https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html
 https://www.youtube.com/watch?v=IQf-vtIC-Uc&t=0s
 
+------------------------------------------------------------------------------------------------------------------
+
+CoroutineScope
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/index.html
+
+interface CoroutineScope {
+public val coroutineContext: CoroutineContext
+}
+
+Define o escope para uma nova coroutine. Toda a Coroutine Builder e uma extension function de Coroutines Scope
+vide
+    - public fun CoroutineScope.launch
+        https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/launch.html
+    - public fun CoroutineScope.async
+        https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/async.html
+e possui uma instancia de (interface) CoroutineContext
+
+CoroutineContext: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.coroutines/-coroutine-context/
+
+inteface CoroutineContext {
+    // basicamente composto por
+    interface Element : CoroutineContext
+    // e
+    interface Key<E : Element>
+}
+
+Contexto persistente duma coroutine. Essa interface eh uma Set Indexado de instancias da interface Element, onde
+cada elemento do Set tem uma chave unica do tipo interface Key
+
+------------------------------------------------------------------------------------------------------------------
+
+interface Element : CoroutineContext
+Element: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.coroutines/-coroutine-context/-element/
+Um Element de um CoroutineContext eh uma subtipo de CoroutineContext por si so
+------------------------------------------------------------------------------------------------------------------
+
+interface Key<E : Element>
+Key: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.coroutines/-coroutine-context/-key.html
+Uma Key é a chave vinculada ao Element 'E' do conjunto indexado de um CoroutineContext. Um Element como dito acima
+eh um subtipo de CoroutineContext
+------------------------------------------------------------------------------------------------------------------
+
+Coroutine Builders
+https://proandroiddev.com/how-to-make-sense-of-kotlin-coroutines-b666c7151b93
+https://kotlinlang.org/docs/reference/coroutines/basics.html
+
+Essencialmente coroutines sao light-weigth threads. Em kotlin elas podem ser lancadas atraves de coroutine builders
+como "public fun CoroutineScope.launch" num contexto de alguma CoroutineScope
+
+launch
+
+------------------------------------------------------------------------------------------------------------------
+
+
 GlobalScope
 https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/index.html
 
+Doc GlobalScope
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/
+------------------------------------------------------------------------------------------------------------------
 
 Basic
 https://kotlinlang.org/docs/reference/coroutines/basics.html
+------------------------------------------------------------------------------------------------------------------
 
 CoroutineContext
 https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html
+------------------------------------------------------------------------------------------------------------------
+
+Flow
+https://kotlinlang.org/docs/coroutines-guide.html#table-of-contents
+https://developer.android.com/kotlin/flow?hl=pt-br
+https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/
+------------------------------------------------------------------------------------------------------------------
