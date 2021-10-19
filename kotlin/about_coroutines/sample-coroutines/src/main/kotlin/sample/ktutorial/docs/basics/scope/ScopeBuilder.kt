@@ -1,4 +1,4 @@
-package sample.ktutorial.basics.scope
+package sample.ktutorial.docs.basics.scope
 
 import kotlinx.coroutines.*
 

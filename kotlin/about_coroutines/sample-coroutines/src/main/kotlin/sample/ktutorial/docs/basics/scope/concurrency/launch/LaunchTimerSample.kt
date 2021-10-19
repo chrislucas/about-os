@@ -1,10 +1,8 @@
-package sample.ktutorial.basics.scope.concurrency
+package sample.ktutorial.docs.basics.scope.concurrency.launch
 
 import kotlinx.coroutines.*
-import java.time.LocalDate
+import sample.ktutorial.docs.basics.scope.concurrency.dtf
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 /*
     Objetivo:
@@ -25,8 +23,6 @@ suspend fun create(fn: suspend () -> Unit): Job {
 /*
     https://mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
  */
-
-var dtf = DateTimeFormatter.ofPattern("MM/dd/uuuu HH:mm:ss");
 
 fun createTimer(delayMillis: Long, tag: String): suspend () -> Job {
     return suspend {

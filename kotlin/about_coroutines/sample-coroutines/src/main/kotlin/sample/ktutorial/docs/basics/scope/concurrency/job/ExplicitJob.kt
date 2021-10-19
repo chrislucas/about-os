@@ -1,12 +1,12 @@
 package sample.ktutorial.basics.scope.concurrency
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 /*
     https://kotlinlang.org/docs/coroutines-basics.html#an-explicit-job
+
+    a funcao launch, responsavel por construir coroutines retornar uma instancia de Job, que eh um Handler
+    para a coroutine lancada
 
  */
 
@@ -19,6 +19,7 @@ private fun checkExplicitJob() = runBlocking {
         }
 
         println("Hello")
+        // Docs/Commentario: Suspends the coroutine until this job is complete.
         job.join()
         println("Done")
     }

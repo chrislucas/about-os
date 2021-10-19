@@ -1,6 +1,10 @@
-package sample.ktutorial.basics;
+package sample.ktutorial.docs.basics;
 
 /**
+ * Guide - source code
+ * https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-core/jvm/test/guide
+ *
+ *
  * https://kotlinlang.org/docs/coroutines-basics.html#structured-concurrency
  * https://github.com/Kotlin/kotlinx.coroutines/blob/master/ui/coroutines-guide-ui.md
  * https://kotlin.github.io/kotlinx.coroutines/

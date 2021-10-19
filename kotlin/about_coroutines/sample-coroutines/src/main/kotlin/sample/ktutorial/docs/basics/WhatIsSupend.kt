@@ -1,4 +1,4 @@
-package sample.ktutorial.basics
+package sample.ktutorial.docs.basics
 
 /**
  * https://stackoverflow.com/questions/47871868/what-does-the-suspend-function-mean-in-a-kotlin-coroutine

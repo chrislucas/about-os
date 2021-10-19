@@ -1,4 +1,4 @@
-package sample.ktutorial.basics.scope.concurrency
+package sample.ktutorial.docs.basics.scope.concurrency
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay

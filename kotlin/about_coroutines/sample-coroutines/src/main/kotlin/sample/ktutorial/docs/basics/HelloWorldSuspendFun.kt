@@ -1,4 +1,4 @@
-package sample.ktutorial.basics
+package sample.ktutorial.docs.basics
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

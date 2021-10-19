@@ -3,6 +3,7 @@ package sample.ktutorial.corscopes
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
+@OptIn(DelicateCoroutinesApi::class)
 fun sampleGlobalScopeLaunch() {
     val job = GlobalScope.launch {
 
