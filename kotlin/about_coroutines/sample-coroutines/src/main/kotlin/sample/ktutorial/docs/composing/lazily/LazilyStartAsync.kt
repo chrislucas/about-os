@@ -1,4 +1,4 @@
-package sample.ktutorial.composing.lazily
+package sample.ktutorial.docs.composing.lazily
 
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis

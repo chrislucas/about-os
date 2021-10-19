@@ -1,4 +1,4 @@
-package sample.ktutorial.composing
+package sample.ktutorial.docs.composing
 
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis

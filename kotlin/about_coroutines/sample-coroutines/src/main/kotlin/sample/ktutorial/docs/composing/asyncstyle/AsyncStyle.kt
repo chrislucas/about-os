@@ -1,4 +1,4 @@
-package sample.ktutorial.composing.asyncstyle
+package sample.ktutorial.docs.composing.asyncstyle
 
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
