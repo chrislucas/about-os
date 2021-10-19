@@ -35,6 +35,17 @@ private fun executeOnStart() = runBlocking {
     println("Time: $timer")
 }
 
+/*
+    abaixo temos um exemplo onde nao chamados a funcao start
+    somente a funcao await
+
+    O resultado eh que obtemos uma execucao sequencial ads coroutines
+    uma vez que a funcao await() vai esperar a execucao da coroutine
+    para obter o resultado.
+
+    fazendo dessa forma temos uma execucao sequencial da funcao
+    o que eh muito pior em termos de desempenho
+ */
 private fun executeOnAwait() = runBlocking {
     val timer = measureTimeMillis {
         val p = async(start = CoroutineStart.LAZY) { doA() }
