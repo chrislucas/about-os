@@ -2,6 +2,7 @@ package sample.ktutorial.docs.ctxanddispatchers
 
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 // https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html
@@ -51,9 +52,32 @@ val executorCoroutineDispatcher = Executors.newSingleThreadExecutor().asCoroutin
 
 @OptIn(ObsoleteCoroutinesApi::class)
 private fun checkDispatchers() = runBlocking(executorCoroutineDispatcher) {
-    /*
+    /**
             Quando launch nao utiliza parametros ela herda o contexto da instancia de
+            CoroutineScope que criou a coroutine, no caso do exemplo aqui estamos
+            falando do contexto da coroutine construida pelo metodo runBlocking
+            que eh executado na Main Thread
+
+        * @see CoroutineScope
             CoroutineScope
+            https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/index.html
+            Define um escopo para uma coroutine. Tod0  o metodo construtor de coroutiner
+            (launch, asymc, runBlocking) é uma extensao de CoroutineScope e herda o atributo
+            coroutineContext para prograpagar automaticamente todos seus elementos e meios de cancelamento
+
+             A melhor forma de obter uma instancia autonoma de escopo de coroutine é através
+             das funcoes FACTORY CoroutineScope() e MainScope()
+
+                - Devemos ter o cuidado de cancelar esses escopos quando nao forem mais necessarios
+
+        * @see CoroutineContext
+            CoroutineContext
+            https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/coroutine-context.html
+
+
+
+            Dispatchers.Unconfined
+            https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html
      */
     launch {
         println("Launch Without param: Current Thread Name - ${Thread.currentThread().name}")
