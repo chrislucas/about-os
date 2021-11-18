@@ -74,29 +74,45 @@ private fun checkDispatchers() = runBlocking(executorCoroutineDispatcher) {
             CoroutineContext
             https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/coroutine-context.html
 
-
-
             Dispatchers.Unconfined
             https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-unconfined.html
+
+            Um dispatcher especial. Segundo a documentacao, aparenta estar sendo executado na main thread porem
+            é executado por outro mecanismo
+
+         * @see Dispatchers.Default
+         * @see createDefaultDispatcher
+            https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-default.html
+            Usado quando nenhum outro dispatcher é definido explicitamente. Usa um pool de threads compartikhado
+
+         * @see newSingleThreadContext
+             * Criar uma thread para uma coroutine ser executada
+             * Entretanto uma thread dedicada eh um recurso caro, em aplicacoes reais esse recurso
+             deve ser liberado assim que nao for mais útil atraves do método close() ou armazenada
+             para reuso numa variável acessível pela aplicação
+
+             * @see ExecutorCoroutineDispatcher
+             * https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-executor-coroutine-dispatcher/close.html
      */
     launch {
+        delay(2000)
         println("Launch Without param: Current Thread Name - ${Thread.currentThread().name}")
     }
 
     launch(context = Dispatchers.Unconfined) {
-        println("Context Unconfined: Current Thread Name - ${Thread.currentThread().name}")
+        println("Unconfined Context: Current Thread Name - ${Thread.currentThread().name}")
     }
 
     launch(context = Dispatchers.Default) {
-        println("Context Default: Current Thread Name - ${Thread.currentThread().name}")
+        println("Default Context: Current Thread Name - ${Thread.currentThread().name}")
     }
 
     launch(context = Dispatchers.IO) {
-        println("Context IO: Current Thread Name - ${Thread.currentThread().name}")
+        println("IO Context: Current Thread Name - ${Thread.currentThread().name}")
     }
 
     launch(context = EmptyCoroutineContext) {
-        println("Context EmptyCoroutineContext: Current Thread Name - ${Thread.currentThread().name}")
+        println("EmptyCoroutineContext Context: Current Thread Name - ${Thread.currentThread().name}")
     }
 
     launch(context = newSingleThreadContext("OwnSingleThreadContext")) {
@@ -104,7 +120,11 @@ private fun checkDispatchers() = runBlocking(executorCoroutineDispatcher) {
     }
 }
 
-
 fun main() {
+    /**
+     * @see UnconfinedVSConfinedDispatcher
+     * Veja a continuacao nessa classe
+     */
     checkDispatchers()
+    executorCoroutineDispatcher.close()
 }
