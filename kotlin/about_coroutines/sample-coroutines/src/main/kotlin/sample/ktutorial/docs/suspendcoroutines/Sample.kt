@@ -22,16 +22,15 @@ suspend fun checkSupervisorScope(): Unit = supervisorScope {
 }
 
 
-suspend fun <T> checkSuspendCoroutineUnInterceptedOrReturn(fn: () -> T?): T? = suspendCoroutineUninterceptedOrReturn {
-    continuation ->
-    println(continuation)
-}
+suspend fun <T> checkSuspendCoroutineUnInterceptedOrReturn(fn: () -> T?): T? =
+    suspendCoroutineUninterceptedOrReturn { continuation ->
+        println(continuation)
+    }
 
 
 fun main() {
     runBlocking {
         checkSupervisorScope()
         checkSuspendCoroutineUnInterceptedOrReturn {}
-
     }
 }

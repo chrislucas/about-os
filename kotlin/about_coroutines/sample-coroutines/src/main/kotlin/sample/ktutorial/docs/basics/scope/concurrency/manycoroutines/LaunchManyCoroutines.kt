@@ -45,7 +45,5 @@ fun main() {
     val s1 = calculate {
         executeXThreads(1000)
     }
-
-
-    println("T1: $s1\nT2: $s2")
+    println("Timer(T1: $s1\nT2: $s2)")
 }

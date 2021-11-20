@@ -16,6 +16,13 @@ import kotlinx.coroutines.runBlocking
     Uma estrutura de dados de stream assicrona qye sequencialmente EMITE valores
         - esses eventos ou sao completados normalmente o lancam uma exception
 
+
+    https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html
+
+    Flow Builders
+
+    flowOf(...)
+
  */
 
 
@@ -40,7 +47,7 @@ private fun fn() = runBlocking {
             delay(500)
         }
     }
-
+    // collect o FLOW
     computing().collect { println(it) }
 }
 
