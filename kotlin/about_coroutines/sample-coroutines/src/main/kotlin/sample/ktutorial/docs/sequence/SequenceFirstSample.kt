@@ -44,7 +44,7 @@ private fun anotherSimple() = sequence {
 
     suspend fun operation() {
         println("Start Operation")
-        kotlinx.coroutines.delay(1000L)
+        delay(1000L)
         println("Finish Operation")
     }
 

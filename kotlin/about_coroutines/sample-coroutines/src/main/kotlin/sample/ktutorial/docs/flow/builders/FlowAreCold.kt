@@ -1,22 +1,31 @@
 package sample.ktutorial.docs.flow.builders
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import sample.ktutorial.logCoroutineScope
 
-/*
+/**
     https://kotlinlang.org/docs/flow.html#flows-are-cold
     Flows sao definidos segundo a documentacao como COld Streams assim como
-    Sequeses
+    Sequences. O codigo dentro da funcao flow nao eh executado ate que
+    a funcao
+    * @see Flow.collect
+
+
+    Note que a funcao simple nao necessita ser modificada com o modificador
+    suspend, ela retorna um Flow<T> rapidamente sem ter que esperar a execucao do bloco
+    flow {}.
+    O flow inicia toda vez que a funcao collect for executada
  */
 
-fun simple() : Flow<Int> = flow {
+private fun simple() : Flow<Int> = flow {
     println("Flow started")
     logCoroutineScope("Simple function")
     for (i in 1 .. 3) {
-        kotlinx.coroutines.delay(100)
+        delay(100)
         emit(i)
     }
 }
