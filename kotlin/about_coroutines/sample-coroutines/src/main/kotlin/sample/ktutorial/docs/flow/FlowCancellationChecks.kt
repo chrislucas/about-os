@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import sample.ktutorial.logCoroutineScope
 
 /*
     https://kotlinlang.org/docs/flow.html#flow-cancellation-checks
@@ -23,6 +24,7 @@ import kotlinx.coroutines.runBlocking
 
 
 private fun simpleSampleEmit() = flow {
+    logCoroutineScope("SimpleSampleEmit fn")
     for (i in 0 .. 100) {
         emit(i)
     }
@@ -41,6 +43,7 @@ private fun checkSimpleSampleEmit() = runBlocking {
 
 private fun sampleWithRange() = runBlocking {
     (1 .. 100).asFlow().collect {
+        logCoroutineScope("SampleWithRange fn")
         if (it == 10)
             cancel("Nice try...")
         println(it)
@@ -48,5 +51,5 @@ private fun sampleWithRange() = runBlocking {
 }
 
 fun main() {
-    sampleWithRange()
+    checkSimpleSampleEmit()
 }
