@@ -1,4 +1,4 @@
-package sample.ktutorial.docs.channel
+package sample.ktutorial.docs.channelflow
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

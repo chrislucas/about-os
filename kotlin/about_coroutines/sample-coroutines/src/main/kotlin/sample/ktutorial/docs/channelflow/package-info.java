@@ -1,4 +1,4 @@
-package sample.ktutorial.docs.channel;
+package sample.ktutorial.docs.channelflow;
 
 /*
     https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html
