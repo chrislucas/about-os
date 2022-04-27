@@ -29,5 +29,11 @@ package sample.ktutorial.docs.flow;
         - Um usuario que recupera o flow nao precisa estar ciente de cetalhes de implementacao
         do upstream flow
 
+    Flow builders
+    https://kotlinlang.org/docs/flow.html#flow-builders
+
+
     Context Preservation
+    https://kotlinlang.org/docs/flow.html#flow-context
+
  */

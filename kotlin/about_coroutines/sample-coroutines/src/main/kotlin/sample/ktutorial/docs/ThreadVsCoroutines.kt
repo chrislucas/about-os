@@ -18,7 +18,7 @@ private fun compareCreateManyInstanceOfThreadAndCoroutines() =
         /**
          * @see sample.ktutorial.docs.basics.scope.concurrency.manycoroutines.main
          */
-        val times = 10_000
+        val times = 100000
 
 
         val p = calculate {
@@ -30,18 +30,16 @@ private fun compareCreateManyInstanceOfThreadAndCoroutines() =
             }
         }
 
-        println("Timer P: $p")
+        println("Timer Coroutine: $p")
 
         val q = calculate {
             val str = StringBuilder()
             for (i in 1..times) {
-                thread {
-                    str.append(i)
-                }
+                thread { str.append(i) }
             }
         }
 
-        println("Timer Q: $q")
+        println("Timer Thread: $q")
 
     }
 

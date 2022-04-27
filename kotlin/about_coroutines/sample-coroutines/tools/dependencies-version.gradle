@@ -1,5 +1,5 @@
 ext.versions = [
-    "ktversion": "1.5.31"
+    "ktversion": "1.6.20"
         , "coroutines": "1.5.2"
         , "retrofit": "2.9.0"
 ]
