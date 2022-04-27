@@ -1,5 +1,6 @@
 package sample.book.kcoroutines.tutorials.flow.recreate.builderinterface.generics.withsuspend.withinterface
 
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
 
@@ -19,7 +20,7 @@ fun <T> createFlowApi(exec: suspend FlowApiCollector<T>.() -> Unit) = object : F
 }
 
 private fun checkCreateFlowApi() {
-    val flowApi = createFlowApi<Comparable<*>> {
+    val flowApi : FlowApi<Comparable<*>> = createFlowApi {
         commit(1)
         commit(2)
         commit(3.0)
@@ -31,6 +32,16 @@ private fun checkCreateFlowApi() {
     }
 }
 
+private fun checkOriginalFlowApi() {
+    val runner = flow {
+        emit(1)
+        emit("s")
+    }
+
+    runBlocking {
+        runner.collect(::println)
+    }
+}
 
 fun main() {
     checkCreateFlowApi()
