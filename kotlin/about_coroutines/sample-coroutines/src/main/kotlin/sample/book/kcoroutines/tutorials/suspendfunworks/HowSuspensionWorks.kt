@@ -38,15 +38,24 @@ suspend fun main() {
     /**
      * O codigo como está não termina de executar,
      * uma vez que a coroutine que foi criada para executar
-     * a funcao main foi suspensa
+     * a funcao main foi suspensa.
+     *
+     * Para terminar a execucao precisamos "liberar" a coroutine.
+     * Fazemos isso através de uma instancia de Continuation executando
+     * a funcao resume(T).
+     *
+     * A funcao suspendCoroutine e projetada de tal forma, que
+     * possibilita usar uma Continuation antes de suspender a funcao.
+     *
+     * Depois da chamada de suspendCoroutine seria impossivel, entao
+     * a funcao lambda passada como argumento para suspendCoroutine
+     * é executada antes da coroutine ser suspensa
      */
-    suspendCoroutine<Unit> { continuation ->
+    val s = suspendCoroutine<Int> { continuation ->
         println("suspendendo a coroutine.\nContinuation[$continuation]")
         //continuation.resumeWith(Result.success(Unit))
-        continuation.resume(Unit)
+        continuation.resume(12)
         println("liberando a coroutine.\nContinuation[$continuation]")
     }
-
-
-    println("Depois de libera-la")
+    println("Depois de libera-la $s")
 }
