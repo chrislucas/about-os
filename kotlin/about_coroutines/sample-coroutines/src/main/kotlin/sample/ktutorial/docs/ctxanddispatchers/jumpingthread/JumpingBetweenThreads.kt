@@ -28,8 +28,6 @@ private fun check() = runBlocking {
                 logCoroutineScope("back to ctx1")
             }
 
-
-
             logCoroutineScope("back to main")
         }
     }

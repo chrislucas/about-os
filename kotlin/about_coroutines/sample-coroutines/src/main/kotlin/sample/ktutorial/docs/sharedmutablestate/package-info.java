@@ -1,4 +1,4 @@
-package sample.ktutorial.docs.sharedmutable;
+package sample.ktutorial.docs.sharedmutablestate;
 
 /*
     https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html
