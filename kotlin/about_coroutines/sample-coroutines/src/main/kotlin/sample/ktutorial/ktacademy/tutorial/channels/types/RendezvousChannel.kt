@@ -1,5 +1,6 @@
 package sample.ktutorial.ktacademy.tutorial.channels.types
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -29,13 +30,14 @@ import sample.ktutorial.logCoroutineScope
  */
 
 
-private fun rendezvousChannel() {
+private fun rendezvousChannelWith2Receivers() {
     val channel = Channel<String>()
     runBlocking {
 
         launch {
             logCoroutineScope("Sending $this")
             for (c in ('a'..'c')) {
+                println("Sending $c")
                 channel.send("$c")
             }
         }
@@ -44,7 +46,7 @@ private fun rendezvousChannel() {
             logCoroutineScope("Receive 1: $this")
             repeat(3) {
                 delay(100)
-                println(channel.receive())
+                println("Receiver 1. Receiving: ${channel.receive()}")
             }
         }
 
@@ -54,12 +56,102 @@ private fun rendezvousChannel() {
             logCoroutineScope("Receive 2: $this")
             channel.receiveAsFlow().collect {
                 delay(200)
-                println("Flow: $it")
+                println("Flow Receiver 2. Receiving: ${channel.receive()}")
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+private fun rendezvousChannel() {
+    val channel = Channel<String>()
+
+    runBlocking {
+        launch {
+            //logCoroutineScope("Sending $this")
+            for (c in ('a'..'c')) {
+                println("Sending $c")
+                channel.send("$c")
+            }
+        }
+
+        launch {
+            //logCoroutineScope("Receive 1: $this")
+            repeat(3) {
+                delay(100)
+                println("Receiver 1. Receiving: ${channel.receive()} IsEmpty: ${channel.isEmpty}")
+                if (channel.isEmpty) {
+                    return@launch
+                }
+            }
+        }
+
+        launch {
+            //logCoroutineScope("Receive 1: $this")
+            repeat(3) {
+                delay(100)
+                println("Receiver 2. Receiving: ${channel.receive()} IsEmpty: ${channel.isEmpty}")
+                if (channel.isEmpty) {
+                    return@launch
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Veja
+ * @see checkBufferedChannelWoth1Receiver
+ */
+private fun rendezvousChannelWith1Receiver() {
+    val channel = Channel<String>()
+    runBlocking {
+
+        launch {
+            logCoroutineScope("Sending $this")
+            for (c in ('a'..'c')) {
+                println("Sending $c")
+                channel.send("$c")
+            }
+        }
+
+        launch {
+            logCoroutineScope("Receive 1: $this")
+            repeat(3) {
+                delay(100)
+                println("Receiver 1. Receiving: ${channel.receive()}")
+            }
+        }
+    }
+}
+
+/**
+ * @see unlimitedChannelWith1Receiver
+ * @see send100MessagesWithBufferedChannelWoth1Receiver
+ */
+
+private fun send100MessagesWithRendezvousChannel() {
+    val channel = Channel<Int>()
+
+    val times = 100
+    runBlocking {
+        launch {
+            repeat(times) {
+                //delay(1000)
+                println("Coroutine 1 Sending: $it")
+                channel.send(it)
+            }
+
+        }
+        launch {
+            repeat(times) {
+                delay(1000)
+                println("Coroutine 2 Receiving: ${channel.receive()}")
             }
         }
     }
 }
 
 fun main() {
-    rendezvousChannel()
+    send100MessagesWithRendezvousChannel()
 }

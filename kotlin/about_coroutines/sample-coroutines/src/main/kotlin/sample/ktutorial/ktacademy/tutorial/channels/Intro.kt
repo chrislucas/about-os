@@ -13,46 +13,70 @@ import sample.ktutorial.docs.logCoroutineScope
  * channel
  */
 
-
+// TODO estudar porque a funcao nao termina sua execucao
+@OptIn(ExperimentalCoroutinesApi::class)
 private fun simpleCommunication() {
     val channel = Channel<String>()
 
     runBlocking {
         launch {
-            logCoroutineScope("Coroutine Producer 1 $this")
+            //logCoroutineScope("Coroutine Producer 1 $this")
             // coroutine 1
-            channel.send("Hello World!!!")
+            println("Sending 1")
+            channel.send("Hello World 1!!!")
+            println("Sending 2")
+            channel.send("Hello World 2!!!")
         }
 
         val consumer1 = async {
-            logCoroutineScope("Coroutine Consumer 1 $this")
-            // coroutine 2
-            channel.receive()
+            if (channel.isEmpty) {
+                "Consumer 1 _ Channel is Empty"
+            }
+            else {
+                //logCoroutineScope("Coroutine Consumer 1 $this")
+                // coroutine 2
+                channel.receive()
+            }
         }
 
         val consumer2 = async {
-            logCoroutineScope("Coroutine Consumer 2 $this")
-            // coroutine 2
-            channel.receive()
+            if (channel.isEmpty)
+                "Consumer 2 _ Channel is Empty"
+            else {
+                //logCoroutineScope("Coroutine Consumer 2 $this")
+                // coroutine 2
+                channel.receive()
+            }
         }
 
-
         val consumer3 = async {
-            logCoroutineScope("Coroutine Consumer 3 $this")
-            // coroutine 2
-            channel.receive()
+             if (channel.isEmpty) {
+                "Consumer 3 _ Channel is Empty"
+            }
+            else {
+                // logCoroutineScope("Coroutine Consumer 3 $this")
+                // coroutine 2
+                channel.receive()
+            }
         }
 
         launch {
-            //logCoroutineScope("Coroutine Consumer 4 $this\nReceive Message: ${channel.receive()}")
+            if (channel.isEmpty) {
+                println("Consumer 4 _ Channel is Empty")
+            } else {
+                logCoroutineScope("Coroutine Consumer 4 $this\nReceive Message: ${channel.receive()}")
+            }
         }
 
-        logCoroutineScope(consumer1.await())
-        logCoroutineScope(consumer2.await())
-        //logCoroutineScope(consumer3.await())
+        logCoroutineScope("Consumer 1 Received Message: ${consumer1.await()}")
+        logCoroutineScope("Consumer 2 Received Message: ${consumer2.await()}")
+        logCoroutineScope("Consumer 3 Received Message: ${consumer3.await()}")
+
+        if (channel.isEmpty)
+            return@runBlocking
     }
 
-    //channel.close()
+    channel.close()
 }
 
 fun main() {
