@@ -34,7 +34,17 @@ package sample.tutorials.sites.medium.flow;
            - Existe uma excecao para algumas poucas operacoes especificamente projetadas para para introduzir
            concorrencia a execucao do flow
 
+    - Flow constraints (restricoes)
+        - Todas as implementacoes da interface Flow devem aderir a 2 propriedades chaves
+            - Context preservation
+            - Exception transparency
 
+    Essas propriedades garantem a capacidade de implementar um raciocio logico sobre o codigo com flow
+        - Permite modularizar o codigo de tal forma que os Emitters do UPSTREAM FLOW podem
+        ser desenvolvidos separadamente dos DOWNSTREAM FLOW COLLECTORS
+
+        - Um usuario do flow nao precisa estar ciente da detalhes de implementacao do
+        UPSTREAM FLOW que ele está usando
    ------------------------------------------------------------------------------------------
    https://medium.com/swlh/introduction-to-flow-channel-and-shared-stateflow-e1c28c5bc755#:~:text=The%20main%20difference%20between%20flows,produced%20outside%20of%20the%20stream.
   ------------------------------------------------------------------------------------------
