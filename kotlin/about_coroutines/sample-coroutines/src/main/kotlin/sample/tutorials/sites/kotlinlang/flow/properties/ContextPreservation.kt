@@ -169,12 +169,49 @@ suspend fun checkEmitValueFromCurrentCoroutineContext() {
                 emit(123)
             }
         }
-
         test()
         emit(1)
     }
-
     f.collect()
+}
+
+
+/*
+    https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/
+ */
+private suspend fun checkChannelFlow() {
+
+    val channelInt1 = channelFlow {
+        logCoroutineScope("ProduceScope Channel 1: $this")
+        withContext(Dispatchers.IO) {
+            logCoroutineScope("Current Coroutine Context Channel 1: ${currentCoroutineContext()}")
+            send(1)
+        }
+    }
+    channelInt1.collect(::println)
+
+    println("************************************************************************************")
+
+
+    val channelInt2 = channelFlow {
+        logCoroutineScope("ProduceScope Channel 2: $this")
+        CoroutineScope(CoroutineName("Custom Coroutine")).launch {
+            logCoroutineScope("Current Coroutine Context Channel 2: ${currentCoroutineContext()}")
+            send(1)
+        }
+    }
+    channelInt2.collect(::println)
+
+    println("************************************************************************************")
+
+    val channelInt3 = channelFlow {
+        logCoroutineScope("ProduceScope Channel 3: $this")
+        CoroutineScope(CoroutineName("Custom Coroutine")).launch {
+            logCoroutineScope("Current Coroutine Context Channel 3: ${currentCoroutineContext()}")
+            send(1)
+        }
+    }.flowOn(Dispatchers.IO)
+    channelInt3.collect(::println)
 
 }
 
@@ -184,6 +221,8 @@ fun main() {
         //check()
         //breakContextPreservation()
         //checkContextPreservarion2()
-        checkEmitValueFromCurrentCoroutineContext()
+        //checkEmitValueFromCurrentCoroutineContext()
+
+        checkChannelFlow()
     }
 }

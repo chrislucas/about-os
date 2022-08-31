@@ -40,7 +40,7 @@ fun main() {
         withContext(Dispatchers.IO) {
             val flowInt2 = flow {
                 println(
-                    "Inside WithContext(Dispatchers.IO) | Coroutine CTX: $coroutineContext | " +
+                    "FlowInt2 - Inside WithContext(Dispatchers.IO) | Coroutine CTX: $coroutineContext | " +
                             "Current Coroutine CTX: ${currentCoroutineContext()} "
                 )
                 emit(2)
@@ -50,7 +50,7 @@ fun main() {
 
             val flowInt3 = flow {
                 println(
-                    "Inside WithContext(Dispatchers.IO) | Coroutine CTX: $coroutineContext | " +
+                    "FlowInt3 - Inside WithContext(Dispatchers.IO) | Coroutine CTX: $coroutineContext | " +
                             "Current Coroutine CTX: ${currentCoroutineContext()} " +
                             "Mudando o contexto usando: 'lowOn(ctx)'"
                 )
@@ -62,7 +62,7 @@ fun main() {
 
         val flowInt4 = flow {
             println(
-                "Inside Runblocking | Coroutine CTX: $coroutineContext | " +
+                "FlowInt4 - Inside Runblocking | Coroutine CTX: $coroutineContext | " +
                         "Current Coroutine CTX: ${currentCoroutineContext()} " +
                         "Mudando o contexto usando: 'lowOn(ctx)'"
             )

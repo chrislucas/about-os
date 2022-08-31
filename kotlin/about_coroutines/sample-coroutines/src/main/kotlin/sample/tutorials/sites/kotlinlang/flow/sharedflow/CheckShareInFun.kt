@@ -29,7 +29,6 @@ private suspend fun checkShareIn() {
 
     withContext(Dispatchers.IO) {
         logCoroutineScope("Filtered Flow: $filtered | Scope: $this")
-
     }
 
     filtered.shareIn(CoroutineScope(Dispatchers.Unconfined), SharingStarted.Lazily).collect(::println)
