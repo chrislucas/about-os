@@ -2,12 +2,15 @@ package sample.ktutorial
 
 import kotlinx.coroutines.currentCoroutineContext
 
-suspend fun logCoroutineScope(message: String): Thread {
-    val thread = Thread.currentThread()
-    val coroutineContext = currentCoroutineContext()
-    println(String.format("Thread [%s] | CurrentCoroutineContext: %s | Message: %s", thread.name, coroutineContext, message))
-    return thread
-}
+suspend fun logCoroutineScope(message: String): Thread =
+    Thread.currentThread().apply {
+        println(
+            String.format(
+                "Thread [%s] | CurrentCoroutineContext: %s | Message: %s", name,
+                currentCoroutineContext(), message
+            )
+        )
+    }
 
 
 fun logThreadScope(message: String): Thread =
