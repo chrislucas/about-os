@@ -6,8 +6,13 @@ suspend fun logCoroutineScope(message: String): Thread =
     Thread.currentThread().apply {
         println(
             String.format(
-                "Thread [%s] | CurrentCoroutineContext: %s | Message: %s", name,
-                currentCoroutineContext(), message
+                "Thread Name: [%s]\nThreadRef: [%s]\nThread ContextClassLoader[%s]\n" +
+                        "CurrentCoroutineContext: %s\nMessage: [%s]\n",
+                name,
+                this,
+                contextClassLoader,
+                currentCoroutineContext(),
+                message
             )
         )
     }
@@ -15,5 +20,5 @@ suspend fun logCoroutineScope(message: String): Thread =
 
 fun logThreadScope(message: String): Thread =
     Thread.currentThread().apply {
-        println(String.format("Thread [%s] | Message: %s", name, message))
+        println(String.format("Thread Name: [%s]\nMessage: [%s]\n", name, message))
     }
