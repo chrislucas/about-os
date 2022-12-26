@@ -78,6 +78,8 @@ private fun checkTestLifeCycleScope() {
        Ha casos que mesmo atraves do ciclo de vida de uma coroutine ou um cancelamento manual nao necessariamente
        cancelam uma coroutine -
        Fonte https://www.raywenderlich.com/books/kotlin-coroutines-by-tutorials/v2.0/chapters/3-getting-started-with-coroutines
+       Por isso eh importante que contruamos mecanismos de cancelamento e um CODIGO COOPERATIVO. Isso significa
+       que nossas funcoes precisa checar  se o Job esta em execução.
 
  */
 class CustomCoroutineScope(override val coroutineContext: CoroutineContext) :
