@@ -1,0 +1,45 @@
+https://www.baeldung.com/rx-java
+
+Simples caracteristicas de Reactive Systems
+
+Responsive – systems should respond in a timely manner
+Message Driven – systems should use async message-passing between components to ensure loose coupling
+Elastic – systems should stay responsive under high load
+Resilient – systems should stay responsive when some components fail
+
+
+Reative Manifesto: https://www.baeldung.com/rx-java#:~:text=The-,Reactive%20Manifesto,-is%20an%20online
+
+
+There are two key types to understand when working with Rx:
+
+- OBSERVABLE represents any object that can get data from a data source and whose state may be of
+interest in a way that other objects may register an interest
+
+- An OBSERVER is any object that wishes to be notified when the state of another object changes
+
+
+There are two types:
+
+- Non-Blocking – asynchronous execution is supported and is allowed to
+unsubscribe at any point in the event stream. On this article, we'll focus mostly on this kind of type
+
+- Blocking – all onNext observer calls will be synchronous,
+and it is not possible to unsubscribe in the middle of an event stream.
+We can always convert an Observable into a Blocking Observable, using the method toBlocking:
+
+
+Operators
+
+An operator is a function that takes ONE OBSERVABLE (THE SOURCE)
+as its first argument and returns ANOTHER OBSERVABLE (THE DESTINATION).
+
+It is not difficult to get into a situation in which an Observable is emitting
+items faster than an operator or observer can consume them.
+You can read more about back-pressure
+here (https://www.baeldung.com/rx-java#:~:text=about%20back%2Dpressure-,here.,-4.3.%20Create%20Observable)
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

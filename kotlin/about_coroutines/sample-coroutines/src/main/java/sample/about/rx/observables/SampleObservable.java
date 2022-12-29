@@ -1,6 +1,7 @@
 package sample.about.rx.observables;
 
 import io.reactivex.rxjava3.core.Observable;
+import java.util.Arrays;
 
 /**
  * https://github.com/mgp/effective-rxjava/blob/master/items/understand-observable-and-observer-chains.md
@@ -43,7 +44,49 @@ public class SampleObservable {
     o3.subscribe(System.out::println).dispose();
   }
 
+  private static void limitArgsObservableZip() {
+    Observable.zip(
+            Arrays.asList(
+                Observable.just(1),
+                Observable.just(2),
+                Observable.just(3),
+                Observable.just(4),
+                Observable.just(5),
+                Observable.just(6),
+                Observable.just(7),
+                Observable.just(8),
+                Observable.just(9),
+                Observable.just(10),
+                Observable.just(11)),
+            observables -> {
+              for (Object o : observables) {
+                System.out.println(o);
+              }
+              return Observable.just(observables);
+            })
+        .subscribe();
+  }
+
+  /*
+     https://www.baeldung.com/rx-java#:~:text=about%20back%2Dpressure-,here.,-4.3.%20Create%20Observable
+  */
+
+  private static void checkCreationOfObservable() {
+    /*
+       When we want to get information out of an Observable,
+        we implement an observer interface and then call subscribe on the desired Observable:
+    */
+
+    Observable<String> observable = Observable.just("Observale Simples String");
+    observable
+        .subscribe(
+            s -> {
+              System.out.printf("Ola, sou o conteudo do observable = %s", s);
+            })
+        .dispose();
+  }
+
   public static void main(String[] args) {
-    checkStaticFactoryFunction();
+    checkCreationOfObservable();
   }
 }
