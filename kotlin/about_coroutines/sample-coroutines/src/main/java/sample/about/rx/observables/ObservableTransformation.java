@@ -24,9 +24,9 @@ public class ObservableTransformation {
   }
 
   /*
-
+    The flatMap can be used to flatten Observables whenever we end up with nested Observables.
   */
-  private static void checkFlatMap() {
+  private static void checkFlatMapSample2() {
     Observable<String> mock = Observable.just("Mocking string");
 
     StringBuilder sb = new StringBuilder();
@@ -48,7 +48,40 @@ public class ObservableTransformation {
     System.out.println(sb);
   }
 
+  private static void checkFlatMapSample1() {
+    Observable<String> mock = Observable.just("Mocking string");
+    StringBuilder sb = new StringBuilder();
+    Observable.just("1", "2")
+        .flatMap(s -> mock)
+        .subscribe(
+            str -> {
+              if (sb.length() == 0) {
+                sb.append(str);
+              } else {
+                sb.append(", ").append(str);
+              }
+            })
+        .dispose();
+    System.out.println(sb);
+  }
+
+  private static void checkFlatMapSample3() {
+    StringBuilder sb = new StringBuilder();
+    Observable.just("1", "2", Observable.just("Mocking string"), Observable.just(14))
+        .flatMap(Observable::just)
+        .subscribe(
+            str -> {
+              if (sb.length() == 0) {
+                sb.append(str);
+              } else {
+                sb.append(", ").append(str);
+              }
+            })
+        .dispose();
+    System.out.println(sb);
+  }
+
   public static void main(String[] args) {
-    checkFlatMap();
+    checkFlatMapSample3();
   }
 }
