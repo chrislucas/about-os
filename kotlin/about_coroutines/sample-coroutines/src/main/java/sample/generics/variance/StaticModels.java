@@ -22,7 +22,7 @@ public class StaticModels {
     }
   }
 
-  static class TextField extends BaseTextField {
+  public static class TextField extends BaseTextField {
 
     TextField(String id, String hint) {
       super(id, hint);
@@ -34,7 +34,7 @@ public class StaticModels {
     }
   }
 
-  static class FlexibleTextField extends TextField {
+  public static class FlexibleTextField extends TextField {
 
     private final String title;
 
@@ -116,11 +116,17 @@ public class StaticModels {
   }
 
   /**
-   * https://kotlinlang.org/docs/generics.html#declaration-site-variance Joshua Bloch gives the name
-   * Producers to objects you only read from and Consumers to those you only write to. He
-   * recommends:
+   * https://kotlinlang.org/docs/generics.html#declaration-site-variance
    *
-   * <p>WriteOnly
+   * <p>Joshua Bloch gives the name PRODUCERS to objects you only read from and CONSUMERS to those
+   * you only write to. Herecommends:
+   *
+   * <p>For maximum flexibility, use wildcard types on input parameters that represent producers or
+   * consumers", and proposes the following mnemonic
+   *
+   * <p>PECS - Producer-Extends, Consumer-Super
+   *
+   * <p>WriteOnly - ConsumerSuper
    */
   static class Consumer<T> {
 
@@ -145,7 +151,7 @@ public class StaticModels {
     }
 
     /*
-       Não é possivel recuperar um elemento T somente inserir
+       Não é possivel recuperar (ler) um elemento T somente inserir (escrever)
     */
     T getValue() {
       // return values.size() > 0 ? values.get(values.size() - 1) : null;
@@ -153,7 +159,12 @@ public class StaticModels {
     }
 
     /*
-       Só é possível recuperar um Object
+       Só é possível recuperar a informação da colecao com um metodo que retorne
+       Object por conta do wildcard <? super T> que limita (lower bound) que somente
+       tipos que herdem de quem T herda possam ser inseridos na colecao.
+       Assim o jeito mais simples de garantir que nao haja erros em execucao é retornar
+       um Tipo que seja SuperTipo de qualquer classe no Java, o tipo Object, sendo ele é o limite
+       superior máximo
     */
     Object getLastValue() {
       return writeOnlyValues.size() > 0 ? writeOnlyValues.get(writeOnlyValues.size() - 1) : null;
@@ -170,9 +181,9 @@ public class StaticModels {
   }
 
   /*
-     ReadOnly
+     ReadOnly - ProducerExtends
   */
-  static class Producer<T> {
+  public static class Producer<T> {
 
     /*
        Limitador superior, só aceita T ou filhos de T
@@ -201,16 +212,29 @@ public class StaticModels {
     }
 
     /*
-       nao é possivel adicionar
+       nao é possivel adicionar(esrever)
     */
     void add(T data) {
       // Nothing
       // values.add(data);
     }
 
+    /*
+      Nem mesmo
+    */
+
+    void addValue(Object data) {
+      // do nothing
+      // readOnlyValues.add(data);
+    }
+
     // somente recuperar
     T getLast() {
       return readOnlyValues.size() > 0 ? readOnlyValues.get(readOnlyValues.size() - 1) : null;
+    }
+
+    public List<? extends T> getReadOnlyValues() {
+      return readOnlyValues;
     }
 
     @Override
@@ -220,6 +244,38 @@ public class StaticModels {
         sb.append(String.format("%s\n", value));
       }
       return sb.toString();
+    }
+  }
+
+  public static class TemplateProducer<T> {
+
+    final ProviderReadOnlyCollection<T> providerReadOnlyCollection;
+
+    final List<? extends T> readOnlyValues;
+
+    public TemplateProducer(ProviderReadOnlyCollection<T> providerReadOnlyCollection) {
+      this.providerReadOnlyCollection = providerReadOnlyCollection;
+      readOnlyValues = providerReadOnlyCollection.getCollection();
+    }
+
+    public List<? extends T> getReadOnlyValues() {
+      return readOnlyValues;
+    }
+
+    @Override
+    public String toString() {
+      if (readOnlyValues.isEmpty()) {
+        return "Is Empty";
+      }
+      StringBuilder sb = new StringBuilder();
+      for (T value : readOnlyValues) {
+        sb.append(String.format("%s\n", value));
+      }
+      return sb.toString();
+    }
+
+    public interface ProviderReadOnlyCollection<T> {
+      List<T> getCollection();
     }
   }
 }
