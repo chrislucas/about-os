@@ -38,7 +38,7 @@ public class StaticModels {
 
     private final String title;
 
-    FlexibleTextField(String id, String hint, String title) {
+    public FlexibleTextField(String id, String hint, String title) {
       super(id, hint);
       this.title = title;
     }
