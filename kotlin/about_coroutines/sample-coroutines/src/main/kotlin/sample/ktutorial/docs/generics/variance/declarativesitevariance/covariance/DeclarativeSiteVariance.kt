@@ -1,4 +1,4 @@
-package sample.ktutorial.docs.generics.variance.declarativesitevariance
+package sample.ktutorial.docs.generics.variance.declarativesitevariance.covariance
 
 
 import sample.generics.variance.DeclarativeSiteVariance.AbstractProducer
