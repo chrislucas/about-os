@@ -1,4 +1,4 @@
-package sample.tutorials.medium.generics.variance
+package sample.tutorials.medium.generics.variance.samplea
 
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import sample.generics.variance.StaticModels.AutoCompleteTextField
 import sample.generics.variance.StaticModels.FlexibleTextField
 import sample.generics.variance.StaticModels.TextField
-import sample.tutorials.medium.generics.variance.Animal.*
+import sample.tutorials.medium.generics.variance.samplea.Animal.*
 
 /*
     https://proandroiddev.com/understanding-type-variance-in-kotlin-d12ad566241b

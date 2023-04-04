@@ -1,4 +1,4 @@
-package sample.tutorials.medium.generics.variance
+package sample.tutorials.medium.generics.variance.samplea
 
 
 /*
