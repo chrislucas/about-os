@@ -49,6 +49,21 @@ public class StaticModels {
     }
   }
 
+  public static class AutoCompleteTextField extends TextField {
+
+    private final String label;
+
+    public AutoCompleteTextField(String id, String label) {
+      super(id, "");
+      this.label = label;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("AutoComplteteTextField %s, %d", id, label);
+    }
+  }
+
   static class WrapperCollection<T> {
     private final List<T> values = new ArrayList<>();
 
