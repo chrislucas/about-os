@@ -3,7 +3,9 @@ package sample.tutorials.medium.generics.variance.samplea
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import sample.generics.variance.StaticModels
 import sample.generics.variance.StaticModels.AutoCompleteTextField
+import sample.generics.variance.StaticModels.BaseTextField
 import sample.generics.variance.StaticModels.FlexibleTextField
 import sample.generics.variance.StaticModels.TextField
 import sample.tutorials.medium.generics.variance.samplea.Animal.*
@@ -14,6 +16,10 @@ import sample.tutorials.medium.generics.variance.samplea.Animal.*
     Variance -
         "Relacao entre tipos genericos que compartilham a mesmo tipo-base mas com tipo de argumento diferente "
         - Exemplo List<Any>, o tipo base é List e o tipo do argumento Any
+
+    Invariance - Class<T>
+    Covariance - Class<out T> - <? extends T>
+    ContraVariance - Class<in T> - <? super T>
  */
 
 
@@ -163,8 +169,76 @@ private fun checkCovariance() {
 }
 
 /**
+ * Conravariance (Reversed subtyping relations)
+ *  - Uma classe generica e chamada contravariante no tipo de parametro quando
+ *  ocorre o seguinte:
+ *      Class<A> e subtipo de de Class<B> se B e subtipo de A
+ *      Exemplo
+ *      Consumer<Animal> e subtipo de Consumer<Cat> porque Cat e Subtipo de Anima
+ *      WriteOnly<TextFiedl> e subtipo de
+ *          - WriteOnly<FlexibleTextField>
+ *          - WriteOnly<AutoCompleteTextField>
  *
+ * @see WriteOnly
  */
+
+private fun checkContravariance() {
+
+    fun basicI() {
+        val writeOnlyFlexibleTextField : WriteOnly<FlexibleTextField> = object : WriteOnly<TextField> {
+            override fun write(value: TextField) {
+                println(value)
+            }
+        }
+        // writeOnlyFlexibleTextField.write(AutoCompleteTextField("#1", "Flexible TextField #1"))
+        writeOnlyFlexibleTextField.write(FlexibleTextField("#1",
+            "Flexible TextField #1", "I am"))
+    }
+
+    fun basic2() {
+        val writeOnlyAutoCompleteTexField: WriteOnly<AutoCompleteTextField> = object : WriteOnly<TextField> {
+            override fun write(value: TextField) {
+                println(value)
+            }
+        }
+
+        // writeOnlyAutoCompleteTexField.write(StaticModels.BaseTextField("", ""))
+        // writeOnlyAutoCompleteTexField.write(TextField("", ""))
+        writeOnlyAutoCompleteTexField.write(AutoCompleteTextField("#1", "AutoComplete TextField #1"))
+    }
+
+
+
+    fun basic3() {
+        val writeOnlyTextField: WriteOnly<TextField> = object : WriteOnly<BaseTextField> {
+            override fun write(value: BaseTextField) {
+                println(value)
+            }
+        }
+
+        // writeOnlyTextField.write(BaseTextField("#1", "TextField #1"))
+        writeOnlyTextField.write(TextField("#1", "TextField #1"))
+        writeOnlyTextField.write(FlexibleTextField("#2", "FlexibleTextField #2", "I am"))
+        writeOnlyTextField.write(AutoCompleteTextField("#2", "AutoCompleteTextField #2"))
+    }
+
+
+    fun base4() {
+        val writeOnlyBaseTextField: WriteOnly<BaseTextField> = object : WriteOnly<BaseTextField> {
+            override fun write(value: BaseTextField) {
+                println(value)
+            }
+        }
+
+        writeOnlyBaseTextField.write(TextField("#1", "TextField #1"))
+        writeOnlyBaseTextField.write(FlexibleTextField("#2", "FlexibleTextField #2", "I am"))
+        writeOnlyBaseTextField.write(AutoCompleteTextField("#2", "AutoCompleteTextField #2"))
+        writeOnlyBaseTextField.write(BaseTextField("#1", "BaseTextField #1"))
+    }
+
+    base4()
+
+}
 
 /*
     Types em Kotlin
@@ -190,6 +264,7 @@ private fun checkTypesAndSubtype() {
 }
 
 fun main() {
-    // -checkAnotherCopy()
-    checkCovariance()
+    // checkAnotherCopy()
+    // checkCovariance()
+    checkContravariance()
 }

@@ -7,30 +7,30 @@ import java.util.List;
 
 public class StaticModels {
 
-  static class BaseTextField {
+  public static class BaseTextField {
 
     protected final String id, hint;
 
-    BaseTextField(String id, String hint) {
+    public BaseTextField(String id, String hint) {
       this.id = id;
       this.hint = hint;
     }
 
     @Override
     public String toString() {
-      return String.format("BaseTextField[%s, %s]", id, hint);
+      return String.format("BaseTextField[id: %s, hint: %s]", id, hint);
     }
   }
 
   public static class TextField extends BaseTextField {
 
-    TextField(String id, String hint) {
+    public TextField(String id, String hint) {
       super(id, hint);
     }
 
     @Override
     public String toString() {
-      return String.format("TextField[%s, %s]", id, hint);
+      return String.format("TextField[id: %s, hint: %s]", id, hint);
     }
   }
 
@@ -45,7 +45,7 @@ public class StaticModels {
 
     @Override
     public String toString() {
-      return String.format("FlexibleTextField[%s, %s, %s]", id, hint, title);
+      return String.format("FlexibleTextField[id: %s, hint: %s, title: %s]", id, hint, title);
     }
   }
 
@@ -60,7 +60,7 @@ public class StaticModels {
 
     @Override
     public String toString() {
-      return String.format("AutoComplteteTextField %s, %d", id, label);
+      return String.format("AutoComplteteTextField[id: %s, label: %s]", id, label);
     }
   }
 
