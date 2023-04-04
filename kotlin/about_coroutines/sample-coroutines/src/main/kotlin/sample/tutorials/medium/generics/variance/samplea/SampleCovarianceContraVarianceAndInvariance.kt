@@ -3,10 +3,11 @@ package sample.tutorials.medium.generics.variance.samplea
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import sample.generics.variance.StaticModels
 import sample.generics.variance.StaticModels.AutoCompleteTextField
+import sample.generics.variance.StaticModels.AutomCompleteTextArea
 import sample.generics.variance.StaticModels.BaseTextField
 import sample.generics.variance.StaticModels.FlexibleTextField
+import sample.generics.variance.StaticModels.TextArea
 import sample.generics.variance.StaticModels.TextField
 import sample.tutorials.medium.generics.variance.samplea.Animal.*
 
@@ -132,22 +133,22 @@ private fun checkMutableListInvariance() {
 
 
 /**
-    Covariance (Preserved subtyping relation)
-        - Uma classe Generica e chamada de covariante "em seu tipo de parametro / tipo parametrizado" quando
-        ocorre o seguinte: Class<A> e um subtipo de Class<B>
-        - Por exemplo, em kotlin a interface List representa uma colecao somente de leitura. Se A é subtype
-        de B entao List<A> ;e subtipo de List<B>
+Covariance (Preserved subtyping relation)
+- Uma classe Generica e chamada de covariante "em seu tipo de parametro / tipo parametrizado" quando
+ocorre o seguinte: Class<A> e um subtipo de Class<B>
+- Por exemplo, em kotlin a interface List representa uma colecao somente de leitura. Se A é subtype
+de B entao List<A> ;e subtipo de List<B>
 
-  ** @see ReadOnly
-     * veja que a keyword out é o modificador de variancia usado para declarar classes como covariante para
-     * certos tipos parametrizaveis
+ ** @see ReadOnly
+ * veja que a keyword out é o modificador de variancia usado para declarar classes como covariante para
+ * certos tipos parametrizaveis
  */
 
 private fun checkCovariance() {
 
-    fun  producer(producerTextField: ReadOnly<TextField>) {
+    fun producer(producerTextField: ReadOnly<TextField>) {
         runBlocking {
-            val textField =  flow<TextField> {
+            val textField = flow<TextField> {
                 producerTextField.producer()
             }.collect()
 
@@ -174,7 +175,16 @@ private fun checkCovariance() {
  *  ocorre o seguinte:
  *      Class<A> e subtipo de de Class<B> se B e subtipo de A
  *      Exemplo
- *      Consumer<Animal> e subtipo de Consumer<Cat> porque Cat e Subtipo de Anima
+ *
+ *      Consumer<in T>
+ *          fun consumer(value: T)
+ *
+ *      Consumer<Animal> e subtipo de Consumer<Cat> porque Cat e Subtipo de Animal
+ *
+ *      Consumer tem como parametros T e super tipos de T e o metodo consumer tem como
+ *      limite superior super tipo de T
+ *
+ *      ------------------------------------------------------------------------------
  *      WriteOnly<TextFiedl> e subtipo de
  *          - WriteOnly<FlexibleTextField>
  *          - WriteOnly<AutoCompleteTextField>
@@ -184,46 +194,85 @@ private fun checkCovariance() {
 
 private fun checkContravariance() {
 
-    fun basicI() {
-        val writeOnlyFlexibleTextField : WriteOnly<FlexibleTextField> = object : WriteOnly<TextField> {
+    fun reverseSubtypingRelationI() {
+        val writeOnlyFlexibleTextField: WriteOnly<FlexibleTextField> = object : WriteOnly<TextField> {
             override fun write(value: TextField) {
                 println(value)
             }
         }
         // writeOnlyFlexibleTextField.write(AutoCompleteTextField("#1", "Flexible TextField #1"))
-        writeOnlyFlexibleTextField.write(FlexibleTextField("#1",
-            "Flexible TextField #1", "I am"))
+        writeOnlyFlexibleTextField.write(
+            FlexibleTextField(
+                "#1",
+                "Flexible TextField #1", "I am"
+            )
+        )
     }
 
-    fun basic2() {
+    fun reverseSubtypingRelation2() {
         val writeOnlyAutoCompleteTexField: WriteOnly<AutoCompleteTextField> = object : WriteOnly<TextField> {
             override fun write(value: TextField) {
                 println(value)
             }
         }
 
-        // writeOnlyAutoCompleteTexField.write(StaticModels.BaseTextField("", ""))
+        // writeOnlyAutoCompleteTexField.write(BaseTextField("", ""))
         // writeOnlyAutoCompleteTexField.write(TextField("", ""))
         writeOnlyAutoCompleteTexField.write(AutoCompleteTextField("#1", "AutoComplete TextField #1"))
     }
 
+    fun reverseSubtypingRelation3() {
 
+        val writeOnlyTextFieldA: WriteOnly<TextField> = object : WriteOnly<TextField> {
+            override fun write(value: TextField) {
+                println(value)
+            }
+        }
 
-    fun basic3() {
+        // writeOnlyTextFieldA.write(BaseTextField("#1", "BaseTextField #1"))
+
+        writeOnlyTextFieldA.write(
+            TextField("#1", "FlexibleTextField #1")
+        )
+
+        writeOnlyTextFieldA.write(
+            FlexibleTextField("#1", "FlexibleTextField #1", "I am")
+        )
+        writeOnlyTextFieldA.write(
+            AutoCompleteTextField("#1", "AutoCompleteTextField #1")
+        )
+
+        println("******************************")
+
+        /*
+            TextFiel supertype FlexibleTextField e AutoCompleteTextField
+            WriteOnLy<TextField> e subtipo de
+                - WriteOnly<FlexibleTextField>
+                - WriteOnly<AutoCompleteTextField>
+         */
+
         val writeOnlyTextField: WriteOnly<TextField> = object : WriteOnly<BaseTextField> {
             override fun write(value: BaseTextField) {
                 println(value)
             }
         }
 
-        // writeOnlyTextField.write(BaseTextField("#1", "TextField #1"))
+        // writeOnlyTextField.write(BaseTextField("#1", "BaseTextField #1"))
         writeOnlyTextField.write(TextField("#1", "TextField #1"))
         writeOnlyTextField.write(FlexibleTextField("#2", "FlexibleTextField #2", "I am"))
         writeOnlyTextField.write(AutoCompleteTextField("#2", "AutoCompleteTextField #2"))
     }
 
+    fun reverseSubtypingRelation4() {
 
-    fun base4() {
+        /*
+            BaseTextField supertype TextField
+            WriteOnly<BaseTextField> e subtipo de
+                TextField supertype de FlexibleTextField, AutoCompleteTextField
+                - WriteOnly<TextField>
+                    - WriteOnly<FlexibleTextField>
+                    - WriteOnly<AutoCompleteTextField>
+         */
         val writeOnlyBaseTextField: WriteOnly<BaseTextField> = object : WriteOnly<BaseTextField> {
             override fun write(value: BaseTextField) {
                 println(value)
@@ -236,7 +285,105 @@ private fun checkContravariance() {
         writeOnlyBaseTextField.write(BaseTextField("#1", "BaseTextField #1"))
     }
 
-    base4()
+
+    fun reverseSubtypingRelation5() {
+
+        /*
+            BaseTextField e supertipo de TextField, portanto:
+            WriteOnly<BaseTextField> e subtipo de
+                    TextField e supertipo de FlexibleTextField, AutoCompleteTextField e TextArea, portanto :
+                -  WriteOnly<TextField> e subtipo de:
+                    - WriteOnly<FlexibleTextField>
+                    - WriteOnly<TextArea>
+                      AutoCompleteTextField e supertipo de AutomCompleteTextArea
+                    - WriteOnly<AutoCompleteTextField> e subtipo de:
+                        WriteOnly<AutomCompleteTextArea>
+
+         */
+        // Limite superior: TextField
+        var mutableFieldWriteOnly: WriteOnly<AutoCompleteTextField>
+        mutableFieldWriteOnly = object : WriteOnly<TextField> {
+            override fun write(value: TextField) {
+                println(value)
+            }
+        }
+
+        mutableFieldWriteOnly.write(TextArea("1#", "-", 10))
+        mutableFieldWriteOnly.write(AutoCompleteTextField("1#", "-"))
+        mutableFieldWriteOnly.write(FlexibleTextField("1#", "-", "-"))
+        mutableFieldWriteOnly.write(TextField("1#", "-"))
+        // nao compila por conta do limite superior
+        // writeOnlyTextField.write(BaseTextField("1#", "-"))
+
+        println("********************************")
+
+
+        /*
+            AutoCompleteTextField nao e um subtipo de FlexibleTextField entao
+            WriteOnly<AutoCompleteTextField> nao e um subtipo de WriteOnly<FlexibleTextField>
+
+            writeOnlyTextField = object : WriteOnly<FlexibleTextField> {
+                override fun write(value: FlexibleTextField) {
+                    println(value)
+                }
+            }
+
+            AutoCompleteTextField nao e um subtipo de TextArea entao
+            WriteOnly<AutoCompleteTextField> nao e um subtipo de WriteOnly<TextArea>
+
+            writeOnlyTextField = object : WriteOnly<TextArea> {
+                override fun write(value: TextArea) {
+                    println(value)
+                }
+            }
+         */
+
+        mutableFieldWriteOnly = object : WriteOnly<BaseTextField> {
+            override fun write(value: BaseTextField) {
+                println(value)
+            }
+        }
+        mutableFieldWriteOnly.write(TextArea("2#", "-", 15))
+        mutableFieldWriteOnly.write(AutoCompleteTextField("2#", "-"))
+        mutableFieldWriteOnly.write(FlexibleTextField("2#", "-", "-"))
+        mutableFieldWriteOnly.write(TextField("2#", "-"))
+        mutableFieldWriteOnly.write(BaseTextField("1#", "-"))
+
+    }
+
+    // reverseSubtypingRelation5()
+
+    fun reverseSubtypingRelation6() {
+
+        /*
+            Limite superior e AutomCompleteTextArea
+         */
+        val writeOnlyAutomCompleteTextArea: WriteOnly<AutomCompleteTextArea> =
+            object : WriteOnly<AutoCompleteTextField> {
+                override fun write(value: AutoCompleteTextField) {
+                    println(value)
+                }
+            }
+
+        writeOnlyAutomCompleteTextArea.write(AutomCompleteTextArea("#1", "#1", 12))
+
+        println("********************************")
+
+        /*
+            Limite superior e AutoCompleteTextField
+         */
+        val writeOnlyAutoCompleteTextField: WriteOnly<AutoCompleteTextField> =
+            object : WriteOnly<AutoCompleteTextField> {
+                override fun write(value: AutoCompleteTextField) {
+                    println(value)
+                }
+            }
+
+        writeOnlyAutoCompleteTextField.write(AutoCompleteTextField("#1", "#1"))
+        writeOnlyAutoCompleteTextField.write(AutomCompleteTextArea("#2", "#2", 13))
+    }
+
+    reverseSubtypingRelation6()
 
 }
 

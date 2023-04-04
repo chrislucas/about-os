@@ -64,6 +64,35 @@ public class StaticModels {
     }
   }
 
+  public static class TextArea extends TextField {
+
+    private final int lines;
+
+    public TextArea(String id, String hint, int lines) {
+      super(id, hint);
+      this.lines = lines;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("TextArea[id: %s, hint: %s, lines: %d]", id, hint, lines);
+    }
+  }
+
+  public static class AutomCompleteTextArea extends AutoCompleteTextField {
+    private final int lines;
+
+    public AutomCompleteTextArea(String id, String label, int lines) {
+      super(id, label);
+      this.lines = lines;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("AutomCompleteTextArea[id: %s, hint: %s, lines: %d]", id, hint, lines);
+    }
+  }
+
   static class WrapperCollection<T> {
     private final List<T> values = new ArrayList<>();
 
