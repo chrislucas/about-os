@@ -3,8 +3,9 @@ package sample.tutorials.medium.generics.variance.samplea
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import sample.generics.variance.StaticModels.AutoCompleteFlexibleTextfield
 import sample.generics.variance.StaticModels.AutoCompleteTextField
-import sample.generics.variance.StaticModels.AutomCompleteTextArea
+import sample.generics.variance.StaticModels.AutoCompleteTextArea
 import sample.generics.variance.StaticModels.BaseTextField
 import sample.generics.variance.StaticModels.FlexibleTextField
 import sample.generics.variance.StaticModels.TextArea
@@ -170,10 +171,10 @@ private fun checkCovariance() {
 }
 
 /**
- * Conravariance (Reversed subtyping relations)
+ * Contravariance (Reversed subtyping relations)
  *  - Uma classe generica e chamada contravariante no tipo de parametro quando
  *  ocorre o seguinte:
- *      Class<A> e subtipo de de Class<B> se B e subtipo de A
+ *      Class<A> eh subtipo de  Class<B> se B e subtipo de A
  *      Exemplo
  *
  *      Consumer<in T>
@@ -181,11 +182,11 @@ private fun checkCovariance() {
  *
  *      Consumer<Animal> e subtipo de Consumer<Cat> porque Cat e Subtipo de Animal
  *
- *      Consumer tem como parametros T e super tipos de T e o metodo consumer tem como
- *      limite superior super tipo de T
+ *      Consumer tem como parametros T e SUPERTIPOS de T e o metodo consumer tem como
+ *      limite superior SUPERTIPO de T
  *
  *      ------------------------------------------------------------------------------
- *      WriteOnly<TextFiedl> e subtipo de
+ *      WriteOnly<TextField> e subtipo de
  *          - WriteOnly<FlexibleTextField>
  *          - WriteOnly<AutoCompleteTextField>
  *
@@ -195,16 +196,34 @@ private fun checkCovariance() {
 private fun checkContravariance() {
 
     fun reverseSubtypingRelationI() {
+
+
+        /*
+             Limite inferior FlexibleTextField: Posso passar para o metodo write uma instancia de
+                 - FlexibleTextField
+                 - Filhos de FlexibleTextField, diretos ou indiretors
+         */
         val writeOnlyFlexibleTextField: WriteOnly<FlexibleTextField> = object : WriteOnly<TextField> {
             override fun write(value: TextField) {
                 println(value)
             }
         }
-        // writeOnlyFlexibleTextField.write(AutoCompleteTextField("#1", "Flexible TextField #1"))
+        /*
+            writeOnlyFlexibleTextField.write(AutoCompleteTextField("#1", "Flexible TextField #1"))/
+         */
         writeOnlyFlexibleTextField.write(
             FlexibleTextField(
                 "#1",
-                "Flexible TextField #1", "I am"
+                "Flexible TextField #1",
+                "I am"
+            )
+        )
+
+        writeOnlyFlexibleTextField.write(
+            AutoCompleteFlexibleTextfield(
+                "#1",
+                "AutoCompleteFlexibleTexfield #1",
+                "AutoCompleteFlexibleTexfield"
             )
         )
     }
@@ -223,6 +242,12 @@ private fun checkContravariance() {
 
     fun reverseSubtypingRelation3() {
 
+        /*
+            Limite interior: TextField
+            Posso passar para o metodo write as seguintes instancias
+                - TextField
+                - Filhos de TextField, diretos e indiretos
+         */
         val writeOnlyTextFieldA: WriteOnly<TextField> = object : WriteOnly<TextField> {
             override fun write(value: TextField) {
                 println(value)
@@ -231,36 +256,40 @@ private fun checkContravariance() {
 
         // writeOnlyTextFieldA.write(BaseTextField("#1", "BaseTextField #1"))
 
+        arrayOf(
+            TextField("#1", "FlexibleTextField #1"),
+            FlexibleTextField("#1", "FlexibleTextField #1", "I am"),
+            AutoCompleteTextField("#1", "AutoCompleteTextField #1"),
+        ).forEach {
+            writeOnlyTextFieldA.write(it)
+        }
+
+        println("Teste writeOnlyTextFieldA")
+
         writeOnlyTextFieldA.write(
             TextField("#1", "FlexibleTextField #1")
         )
 
         writeOnlyTextFieldA.write(
-            FlexibleTextField("#1", "FlexibleTextField #1", "I am")
+            FlexibleTextField("#1", "FlexibleTextField #1", "I am"),
         )
+
         writeOnlyTextFieldA.write(
-            AutoCompleteTextField("#1", "AutoCompleteTextField #1")
+            AutoCompleteTextField("#1", "AutoCompleteTextField #1"),
         )
 
-        println("******************************")
+        writeOnlyTextFieldA.write(
+            AutoCompleteFlexibleTextfield(
+                "#1",
+                "AutoCompleteTextField #1",
+                ""
+            ),
+        )
 
-        /*
-            TextFiel supertype FlexibleTextField e AutoCompleteTextField
-            WriteOnLy<TextField> e subtipo de
-                - WriteOnly<FlexibleTextField>
-                - WriteOnly<AutoCompleteTextField>
-         */
 
-        val writeOnlyTextField: WriteOnly<TextField> = object : WriteOnly<BaseTextField> {
-            override fun write(value: BaseTextField) {
-                println(value)
-            }
-        }
+        println("******************************************************************************************")
 
-        // writeOnlyTextField.write(BaseTextField("#1", "BaseTextField #1"))
-        writeOnlyTextField.write(TextField("#1", "TextField #1"))
-        writeOnlyTextField.write(FlexibleTextField("#2", "FlexibleTextField #2", "I am"))
-        writeOnlyTextField.write(AutoCompleteTextField("#2", "AutoCompleteTextField #2"))
+
     }
 
     fun reverseSubtypingRelation4() {
@@ -358,14 +387,20 @@ private fun checkContravariance() {
         /*
             Limite superior e AutomCompleteTextArea
          */
-        val writeOnlyAutomCompleteTextArea: WriteOnly<AutomCompleteTextArea> =
+        val writeOnlyAutomCompleteTextArea: WriteOnly<AutoCompleteTextArea> =
             object : WriteOnly<AutoCompleteTextField> {
                 override fun write(value: AutoCompleteTextField) {
                     println(value)
                 }
             }
 
-        writeOnlyAutomCompleteTextArea.write(AutomCompleteTextArea("#1", "#1", 12))
+        writeOnlyAutomCompleteTextArea.write(
+            AutoCompleteTextArea(
+                "#1",
+                "#1",
+                12
+            )
+        )
 
         println("********************************")
 
@@ -380,7 +415,13 @@ private fun checkContravariance() {
             }
 
         writeOnlyAutoCompleteTextField.write(AutoCompleteTextField("#1", "#1"))
-        writeOnlyAutoCompleteTextField.write(AutomCompleteTextArea("#2", "#2", 13))
+        writeOnlyAutoCompleteTextField.write(
+            AutoCompleteTextArea(
+                "#2",
+                "#2",
+                13
+            )
+        )
     }
 
     reverseSubtypingRelation6()

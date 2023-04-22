@@ -36,7 +36,7 @@ public class StaticModels {
 
   public static class FlexibleTextField extends TextField {
 
-    private final String title;
+    protected final String title;
 
     public FlexibleTextField(String id, String hint, String title) {
       super(id, hint);
@@ -79,10 +79,10 @@ public class StaticModels {
     }
   }
 
-  public static class AutomCompleteTextArea extends AutoCompleteTextField {
+  public static class AutoCompleteTextArea extends AutoCompleteTextField {
     private final int lines;
 
-    public AutomCompleteTextArea(String id, String label, int lines) {
+    public AutoCompleteTextArea(String id, String label, int lines) {
       super(id, label);
       this.lines = lines;
     }
@@ -90,6 +90,32 @@ public class StaticModels {
     @Override
     public String toString() {
       return String.format("AutomCompleteTextArea[id: %s, hint: %s, lines: %d]", id, hint, lines);
+    }
+  }
+
+  public static class AutoCompleteFlexibleTextfield extends FlexibleTextField {
+
+    public AutoCompleteFlexibleTextfield(String id, String hint, String title) {
+      super(id, hint, title);
+    }
+
+    @Override
+    public String toString() {
+      return String.format(
+          "AutoCompleteFlexibleTexfield[ID[%s], HINT[%s], TITLE[%s]]", id, hint, title);
+    }
+  }
+
+  public static class AutoCompleteFlexibleTextArea extends AutoCompleteFlexibleTextfield {
+
+    public AutoCompleteFlexibleTextArea(String id, String hint, String title) {
+      super(id, hint, title);
+    }
+
+    @Override
+    public String toString() {
+      return String.format(
+          "AutoCompleteFlexibleTexArea[ID[%s], HINT[%s], TITLE[%s]]", id, hint, title);
     }
   }
 
