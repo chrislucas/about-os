@@ -23,6 +23,9 @@ public class StaticModels {
   }
 
   public static class TextField extends BaseTextField {
+    public TextField() {
+      super("", "");
+    }
 
     public TextField(String id, String hint) {
       super(id, hint);
@@ -37,6 +40,11 @@ public class StaticModels {
   public static class FlexibleTextField extends TextField {
 
     protected final String title;
+
+    public FlexibleTextField() {
+      super("", "");
+      this.title = "";
+    }
 
     public FlexibleTextField(String id, String hint, String title) {
       super(id, hint);
@@ -80,7 +88,12 @@ public class StaticModels {
   }
 
   public static class AutoCompleteTextArea extends AutoCompleteTextField {
-    private final int lines;
+    protected final int lines;
+
+    public AutoCompleteTextArea() {
+      super("", "");
+      this.lines = Integer.MAX_VALUE;
+    }
 
     public AutoCompleteTextArea(String id, String label, int lines) {
       super(id, label);
@@ -116,6 +129,22 @@ public class StaticModels {
     public String toString() {
       return String.format(
           "AutoCompleteFlexibleTexArea[ID[%s], HINT[%s], TITLE[%s]]", id, hint, title);
+    }
+  }
+
+  public static class AutoCompleteCodeEditor extends AutoCompleteTextArea {
+
+    private final String title;
+
+    public AutoCompleteCodeEditor(String id, String label, String title, int lines) {
+      super(id, label, lines);
+      this.title = title;
+    }
+
+    @Override
+    public String toString() {
+      return String.format(
+          "AutoCompleteCodeEditor[ID[%s], HINT[%s], TITLE[%s], LINES[%d]]", id, hint, title, lines);
     }
   }
 
