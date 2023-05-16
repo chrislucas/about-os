@@ -1,6 +1,5 @@
 package com.br.dsl.tutorial.composableshape
 
-import com.br.dsl.tutorial.composableshape.Square.*
 
 /**
  * https://medium.com/kotlin-en-android/kotlin-dsl-introduccion-f112557f5662
@@ -41,18 +40,60 @@ internal class Canvas {
     }
 }
 
-internal sealed class GeomShape(val pos: PairInt)
+internal sealed class GeomShape(val pos: PairInt) {
+    protected companion object {
+        const val WHITE_SPACE = ' '
+    }
 
+    abstract infix fun interssection(q: GeomShape): GeomShape
+    abstract infix fun union(q: GeomShape): GeomShape
 
-internal class Square(val x: Int = 0, val y: Int = 0, pos: PairInt = Pair(0, 0)) : GeomShape(pos) {
+    val grid: Array<CharArray> = arrayOf()
+
+    protected open val line: (Int) -> CharArray
+        get() = { idx ->
+            when {
+                idx in grid.indices -> {
+                    grid[idx]
+                }
+
+                grid.isNotEmpty() -> {
+                    CharArray(grid[0].size) { WHITE_SPACE }
+                }
+
+                else -> {
+                    charArrayOf()
+                }
+            }
+        }
+}
+
+internal open class Square(val x: Int = 0, val y: Int = 0, pos: PairInt = Pair(0, 0)) : GeomShape(pos) {
 
     override fun toString(): String {
         return "S"
     }
 
-    class MutableSquare(var x: Int = 0, var y: Int = 0, var pos: PairInt = Pair(0, 0)) {
+    class MutableSquare(
+        var x: Int = 0,
+        var y: Int = 0,
+        var pos: PairInt = Pair(0, 0)
+    ) {
         fun toSquare() = Square(x, y, pos)
     }
+
+    override infix fun interssection(q: GeomShape): GeomShape = this
+    override infix fun union(q: GeomShape): GeomShape = this
+}
+
+internal class Space(private val size: Int = 1) : Square(0, 0, Pair(0, 0)) {
+    override val line: (Int) -> CharArray
+        get() = {
+            CharArray(size) { WHITE_SPACE }
+        }
+
+    override infix fun interssection(q: GeomShape): GeomShape = this
+    override infix fun union(q: GeomShape): GeomShape = this
 }
 
 internal class Triangle(val p: PairInt, val q: PairInt, val r: PairInt, pos: PairInt) : GeomShape(pos) {
@@ -61,8 +102,54 @@ internal class Triangle(val p: PairInt, val q: PairInt, val r: PairInt, pos: Pai
     override fun toString(): String {
         return "T"
     }
+
+    override infix fun interssection(q: GeomShape): GeomShape = this
+    override infix fun union(q: GeomShape): GeomShape = this
+
+    class MutableTriangle(
+        var p: PairInt = Pair(0, 0),
+        var q: PairInt = Pair(0, 0),
+        var r: PairInt = Pair(0, 0),
+        var center: PairInt = Pair(0, 0)
+    ) {
+        fun toTriangle() = Triangle(p, q, r, center)
+    }
 }
 
-internal class ComposedShape(val shapes: List<GeomShape> = emptyList(), pos: PairInt = Pair(0, 0)) : GeomShape(pos)
+internal enum class ShapeOperation {
+    UNION, INTERSECTION
+}
 
+internal class BinaryCompoundShaped(
+    val p: GeomShape,
+    val q: GeomShape,
+    val operation: ShapeOperation,
+    pos: PairInt = Pair(0, 0)
+) : GeomShape(pos) {
+    override infix fun interssection(q: GeomShape): GeomShape = this
 
+    override infix fun union(q: GeomShape): GeomShape = this
+
+    class MutableBinaryCompoundShaped(
+        var p: GeomShape = Space(),
+        var q: GeomShape = Space(),
+        var operation: ShapeOperation = ShapeOperation.UNION,
+        var pos: PairInt = Pair(0, 0)
+    ) {
+        fun toBinaryCompoundShaped() = BinaryCompoundShaped(
+            p, q, operation, pos
+        )
+
+        fun applyOperation(): GeomShape {
+            return when (operation) {
+                ShapeOperation.UNION -> {
+                    Space()
+                }
+
+                else -> {
+                    Space()
+                }
+            }
+        }
+    }
+}
