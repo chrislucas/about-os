@@ -1,9 +1,23 @@
 Referencias sobre java annotation processor
 
+Interface Processor
+https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html
+https://medium.com/swlh/all-about-annotations-and-annotation-processors-4af47159f29d
 
 https://www.baeldung.com/java-annotation-processing-builder
+https://medium.com/@jintin/annotation-processing-in-java-3621cb05343a
+https://medium.com/xtechportugal/what-is-java-annotation-processing-7c311f64ec6a
+https://hannesdorfmann.com/annotation-processing/annotationprocessing101/
+
+https://www.jetbrains.com/help/idea/annotation-processors-support.html#annotation_processing
 
 https://reflectoring.io/java-annotation-processing/
 https://www.virtuslab.com/blog/build-your-own-framework/
 https://github.com/gunnarmorling/awesome-annotation-processing
 https://github.com/skinny85/jilt
+
+
+
+Kotlin
+https://medium.com/android-news/merryannotation-your-first-annotation-processor-in-kotlin-android-eb3af4ab3402
+https://proandroiddev.com/the-guide-to-your-first-annotation-processor-with-ksp-and-becoming-a-kotlin-artist-4e5d13f171e6
