@@ -71,7 +71,7 @@ internal sealed class GeomShape(val pos: PairInt) {
 internal open class Square(val x: Int = 0, val y: Int = 0, pos: PairInt = Pair(0, 0)) : GeomShape(pos) {
 
     override fun toString(): String {
-        return "S"
+        return "q"
     }
 
     class MutableSquare(
@@ -94,13 +94,17 @@ internal class Space(private val size: Int = 1) : Square(0, 0, Pair(0, 0)) {
 
     override infix fun interssection(q: GeomShape): GeomShape = this
     override infix fun union(q: GeomShape): GeomShape = this
+
+    override fun toString(): String {
+        return "s"
+    }
 }
 
 internal class Triangle(val p: PairInt, val q: PairInt, val r: PairInt, pos: PairInt) : GeomShape(pos) {
     constructor() : this(Pair(0, 0), Pair(0, 0), Pair(0, 0), Pair(0, 0))
 
     override fun toString(): String {
-        return "T"
+        return "t"
     }
 
     override infix fun interssection(q: GeomShape): GeomShape = this
@@ -151,5 +155,9 @@ internal class BinaryCompoundShaped(
                 }
             }
         }
+    }
+
+    override fun toString(): String {
+        return "$p, $q"
     }
 }

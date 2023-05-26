@@ -14,6 +14,7 @@ private fun createLayout() {
             p = Square()
             q = Triangle()
             operation = ShapeOperation.UNION
+            pos = Pair(1, 1)
         }
 
         space()
@@ -27,11 +28,18 @@ private fun createLayout() {
 
         space()
 
-
-
     }.show()
 }
 
+/**
+ * Artigo sobre a cricao de uma DSL em kotlin
+ * https://medium.com/kotlin-en-android/kotlin-dsl-introduccion-f112557f5662
+ * https://medium.com/kotlin-en-android/kotlin-dsl-codigo-base-6536948beb93
+ * https://medium.com/kotlin-en-android/kotlin-dsl-construccion-del-dsl-1-893eaf900cc
+ *
+ * Projeto do artigo
+ * https://github.com/pencelab/Shapes-DSL/tree/master
+ */
 fun main() {
     createLayout()
 }
