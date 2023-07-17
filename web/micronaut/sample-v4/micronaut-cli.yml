@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.sample.explorer.v4
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [app-name, cache-caffeine, gradle, http-client, java, java-application, junit, kubernetes-client, logback, micronaut-aot, micronaut-build, mockito, netty-server, openapi, properties, readme, serialization-jackson, shade, swagger-ui]

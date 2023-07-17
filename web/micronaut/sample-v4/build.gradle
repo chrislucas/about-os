@@ -1,0 +1,83 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
+plugins {
+    id("io.micronaut.application") version "4.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.micronaut.aot") version "4.0.0"
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+}
+
+version = "0.1"
+group = "com.sample.explorer.v4"
+
+repositories {
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+        mavenContent { snapshotsOnly() }
+    }
+    mavenCentral()
+}
+
+sourceSets {
+    main.java.srcDirs("src/main/java", "src/main/kotlin")
+}
+
+dependencies {
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.cache:micronaut-cache-caffeine")
+    implementation("io.micronaut.kubernetes:micronaut-kubernetes-client")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testImplementation("org.mockito:mockito-core")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+
+application {
+    mainClass.set("com.sample.explorer.v4.Application")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.sample.explorer.v4.*")
+    }
+
+    aot {
+    // Please review carefully the optimizations enabled below
+    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+    }
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+
+
+
